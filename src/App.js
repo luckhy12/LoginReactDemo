@@ -1,25 +1,37 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { BrowserRouter, Switch, Route } from "react-router-dom";
+import "./App.css";
+import { connect } from "react-redux";
+import ProtectedRoute from "./ProtectedRoute";
+import LoginPage from "./components/LoginPage";
+import Details from "./components/Details";
+import {NotificationContainer} from 'react-notifications';
 
-function App() {
+function App(props) {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <React.Fragment>
+      <BrowserRouter>
+        <Switch>
+          <Route exact path="/" component={LoginPage} />
+          <ProtectedRoute
+            exact
+            path="/Details"
+            component={Details}
+            loginData={props.data.loginData}
+          />
+        </Switch>
+      </BrowserRouter>
+      <NotificationContainer/>
+    </React.Fragment>
   );
 }
 
-export default App;
+const mapStateToProps = (state) => {
+  return {
+    loader: state.loader,
+    data: state.login,
+    error: state.error,
+  };
+};
+
+export default connect(mapStateToProps, null)(App);
