@@ -61,7 +61,7 @@ class Register extends React.Component {
   onSubmitForm = (event) => {
     event.preventDefault();
     this.props.registerUser(this.state.reg_data, res => {
-        this.history.push('/Details')
+        this.props.history.push('/Details')
     })
   };
 
