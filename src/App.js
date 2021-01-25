@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import ProtectedRoute from "./ProtectedRoute";
 import LoginPage from "./components/LoginPage";
 import Details from "./components/Details";
+import Register from "./components/Register";
 import {NotificationContainer} from 'react-notifications';
 
 function App(props) {
@@ -13,6 +14,7 @@ function App(props) {
       <BrowserRouter>
         <Switch>
           <Route exact path="/" component={LoginPage} />
+          <Route exact path="/register" component={Register} />
           <ProtectedRoute
             exact
             path="/Details"
