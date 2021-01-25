@@ -1,9 +1,9 @@
 import { serviceCall } from "../services/ServiceCall";
 import ActionConstants from '../config/AppConstants';
-export const checkLogin = (data, callback) => {
+export const registerUser = (data, callback) => {
   return async (dispatch) => {
     serviceCall({
-      url: "/api/Account/Login",
+      url: "/api/Account/Register",
       method: "post",
       data: data,
       headers: {

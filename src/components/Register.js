@@ -11,8 +11,10 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import Container from "@material-ui/core/Container";
 import { withStyles } from "@material-ui/core/styles";
+import { registerUser } from "../services/RegistraionService";
+import { connect } from "react-redux";
 
-const styles = ((theme) => ({
+const styles = (theme) => ({
   paper: {
     marginTop: theme.spacing(8),
     display: "flex",
@@ -30,11 +32,37 @@ const styles = ((theme) => ({
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
-}));
+});
 
 class Register extends React.Component {
   state = {
-    searchNodes: "",
+    reg_data: {
+      email: "",
+      password: "",
+      firstName: "",
+      lastName: "",
+      clientName: "",
+      phoneNumber: "",
+      phoneNumberType: "",
+      registerationDate: new Date(),
+      role: "",
+    },
+  };
+
+  handleChange = async (e) => {
+    let { name, value } = e.target;
+    await this.setState((prevState) => {
+      const reg_data = { ...prevState.reg_data };
+      reg_data[name] = value;
+      return { reg_data };
+    });
+  };
+
+  onSubmitForm = (event) => {
+    event.preventDefault();
+    this.props.registerUser(this.state.reg_data, res => {
+        this.history.push('/Details')
+    })
   };
 
   render() {
@@ -49,9 +77,9 @@ class Register extends React.Component {
           <Typography component="h1" variant="h5">
             Sign up
           </Typography>
-          <form className={classes.form} noValidate>
+          <form className={classes.form} noValidate onSubmit={this.onSubmitForm}>
             <Grid container spacing={2}>
-            <Grid item xs={12} sm={6}>
+              <Grid item xs={12} sm={6}>
                 <TextField
                   autoComplete="email"
                   name="email"
@@ -61,6 +89,8 @@ class Register extends React.Component {
                   id="email"
                   label="Email"
                   autoFocus
+                  value={this.state.reg_data.email}
+                  onChange={this.handleChange}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -73,6 +103,8 @@ class Register extends React.Component {
                   id="firstName"
                   label="First Name"
                   autoFocus
+                  value={this.state.reg_data.firstName}
+                  onChange={this.handleChange}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -84,6 +116,8 @@ class Register extends React.Component {
                   label="Last Name"
                   name="lastName"
                   autoComplete="lname"
+                  value={this.state.reg_data.lastName}
+                  onChange={this.handleChange}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -96,6 +130,8 @@ class Register extends React.Component {
                   name="password"
                   autoComplete="password"
                   type="password"
+                  value={this.state.reg_data.password}
+                  onChange={this.handleChange}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -108,6 +144,8 @@ class Register extends React.Component {
                   type="text"
                   id="client-name"
                   autoComplete="clientName"
+                  value={this.state.reg_data.clientName}
+                  onChange={this.handleChange}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -120,6 +158,8 @@ class Register extends React.Component {
                   type="text"
                   id="phone-number"
                   autoComplete="phoneNumber"
+                  value={this.state.reg_data.phoneNumber}
+                  onChange={this.handleChange}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -132,18 +172,22 @@ class Register extends React.Component {
                   type="text"
                   id="phone-number-type"
                   autoComplete="phoneNumberType"
+                  value={this.state.reg_data.phoneNumberType}
+                  onChange={this.handleChange}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
-                  variant="outlined"
-                  required
-                  fullWidth
-                  name="reg-date"
-                  label="Registration Datw"
-                  type="text"
-                  id="reg-date"
-                  autoComplete="reg-date"
+                  id="registerationDate"
+                  name="registerationDate"
+                  label="Registration Date"
+                  type="date"
+                  value={this.state.reg_data.registerationDate}
+                  onChange={this.handleChange}
+                  className={classes.textField}
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -156,6 +200,8 @@ class Register extends React.Component {
                   type="text"
                   id="role"
                   autoComplete="role"
+                  value={this.state.reg_data.role}
+                  onChange={this.handleChange}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -190,4 +236,14 @@ class Register extends React.Component {
   }
 }
 
-export default withStyles(styles, { withTheme: true })(Register);
+const mapDispatchToProps = {
+  registerUser,
+};
+const mapStateToProps = (state) => {
+  return {
+    data: state.login,
+  };
+};
+export default withStyles(styles, { withTheme: true })(
+  connect(mapStateToProps, mapDispatchToProps)(Register)
+);
