@@ -5,8 +5,8 @@ import { connect } from "react-redux";
 import ProtectedRoute from "./ProtectedRoute";
 import LoginPage from "./components/LoginPage";
 import Details from "./components/Details";
+import ForgotPassword from "./components/ForgotPassword";
 import Register from "./components/Register";
-import {NotificationContainer} from 'react-notifications';
 
 function App(props) {
   return (
@@ -15,6 +15,7 @@ function App(props) {
         <Switch>
           <Route exact path="/" component={LoginPage} />
           <Route exact path="/register" component={Register} />
+          <Route exact path="/forgot-password" component={ForgotPassword} />
           <ProtectedRoute
             exact
             path="/Details"
@@ -23,7 +24,6 @@ function App(props) {
           />
         </Switch>
       </BrowserRouter>
-      <NotificationContainer/>
     </React.Fragment>
   );
 }

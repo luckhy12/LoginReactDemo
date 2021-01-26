@@ -38,4 +38,7 @@ body {
 .form .form__custom-button {
   margin-top: 50px;
 }
+.text-danger{
+color: rgba(236, 12, 23, 0.822);
+}
 

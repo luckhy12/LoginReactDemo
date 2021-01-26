@@ -11,10 +11,11 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
-import { checkLogin } from "../services/LoginService";
+import { checkLogin } from "../services/UserService";
 import { connect } from "react-redux";
-import { NotificationManager } from "react-notifications";
+// import { NotificationManager } from "react-notifications";
 import { useHistory } from "react-router-dom";
+import FormValidator from "../validations/FormValidator";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -36,10 +37,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const loginFormValidator = new FormValidator();
+
 function LoginPage(props) {
-    let history = useHistory();
+  let history = useHistory();
   const classes = useStyles();
   const [loginData, setLoginData] = useState({ email: "", password: "" });
+  const [value, setValue] = useState(0);
 
   const onChangeEmail = (event) => {
     const email = event.target.value;
@@ -53,17 +57,14 @@ function LoginPage(props) {
 
   const onSubmitForm = (event) => {
     event.preventDefault();
-    if (!loginData.email) {
-      NotificationManager.error("Enter email");
-      return false;
+    if (loginFormValidator.allValid()) {
+      props.checkLogin(loginData, (res) => {
+        history.push("/Details");
+      });
+    } else {
+      loginFormValidator.showMessages();
+      setValue(value + 1);
     }
-    if (!loginData.password) {
-      NotificationManager.error("Enter password");
-      return false;
-    }
-    props.checkLogin(loginData, res => {
-        history.push('/Details')
-    })
   };
 
   return (
@@ -90,6 +91,12 @@ function LoginPage(props) {
             value={loginData.email}
             onChange={onChangeEmail}
           />
+          {loginFormValidator.message(
+            "Email",
+            loginData.email,
+            "required|email",
+            "text-danger"
+          )}
           <TextField
             variant="outlined"
             margin="normal"
@@ -103,6 +110,12 @@ function LoginPage(props) {
             value={loginData.password}
             onChange={onChangePassword}
           />
+          {loginFormValidator.message(
+            "Password",
+            loginData.password,
+            "required|password",
+            "text-danger"
+          )}
           <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}
             label="Remember me"
@@ -118,7 +131,7 @@ function LoginPage(props) {
           </Button>
           <Grid container>
             <Grid item xs>
-              <Link href="#" variant="body2">
+              <Link href="/forgot-password" variant="body2">
                 Forgot password?
               </Link>
             </Grid>

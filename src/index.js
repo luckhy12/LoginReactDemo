@@ -3,15 +3,17 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-import ReduxStore from "./ReduxStore"
-import { Provider } from 'react-redux';
-import 'react-notifications/lib/notifications.css';
+import ReduxStore from "./ReduxStore";
+import { Provider } from "react-redux";
+import "react-notifications/lib/notifications.css";
+import { NotificationContainer } from "react-notifications";
 
 ReactDOM.render(
   <Provider store={ReduxStore.getDefaultStore().store}>
     <React.StrictMode>
       <App />
     </React.StrictMode>
+    <NotificationContainer />
   </Provider>,
   document.getElementById("root")
 );
