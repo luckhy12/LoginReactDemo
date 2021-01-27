@@ -13,6 +13,7 @@ import Container from "@material-ui/core/Container";
 import { withStyles } from "@material-ui/core/styles";
 import { registerUser } from "../services/UserService";
 import { connect } from "react-redux";
+import { NotificationManager } from "react-notifications";
 
 const styles = (theme) => ({
   paper: {
@@ -60,9 +61,15 @@ class Register extends React.Component {
 
   onSubmitForm = (event) => {
     event.preventDefault();
-    this.props.registerUser(this.state.reg_data, res => {
-        this.props.history.push('/details')
-    })
+    this.props.registerUser(
+      this.state.reg_data,
+      (res) => {
+        this.props.history.push("/details");
+      },
+      (err) => {
+        NotificationManager.error(err);
+      }
+    );
   };
 
   render() {
@@ -77,7 +84,11 @@ class Register extends React.Component {
           <Typography component="h1" variant="h5">
             Sign up
           </Typography>
-          <form className={classes.form} noValidate onSubmit={this.onSubmitForm}>
+          <form
+            className={classes.form}
+            noValidate
+            onSubmit={this.onSubmitForm}
+          >
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
                 <TextField

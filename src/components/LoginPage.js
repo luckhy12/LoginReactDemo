@@ -16,6 +16,7 @@ import { connect } from "react-redux";
 // import { NotificationManager } from "react-notifications";
 import { useHistory } from "react-router-dom";
 import FormValidator from "../validations/FormValidator";
+import { NotificationManager } from "react-notifications";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -58,10 +59,16 @@ function LoginPage(props) {
   const onSubmitForm = (event) => {
     event.preventDefault();
     if (loginFormValidator.allValid()) {
-      props.checkLogin(loginData, (res) => {
-        localStorage.setItem("token", res.token);
-        history.push("/dashboard");
-      });
+      props.checkLogin(
+        loginData,
+        (res) => {
+          localStorage.setItem("token", res.token);
+          history.push("/dashboard");
+        },
+        (err) => {
+          NotificationManager.error(err);
+        }
+      );
     } else {
       loginFormValidator.showMessages();
       setValue(value + 1);
