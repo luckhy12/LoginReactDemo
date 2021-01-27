@@ -59,7 +59,8 @@ function LoginPage(props) {
     event.preventDefault();
     if (loginFormValidator.allValid()) {
       props.checkLogin(loginData, (res) => {
-        history.push("/Details");
+        localStorage.setItem("token", res.token);
+        history.push("/details");
       });
     } else {
       loginFormValidator.showMessages();

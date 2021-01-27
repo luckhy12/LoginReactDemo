@@ -7,6 +7,7 @@ import LoginPage from "./components/LoginPage";
 import Details from "./components/Details";
 import ForgotPassword from "./components/ForgotPassword";
 import Register from "./components/Register";
+import Dashboard from "./components/Dashboard";
 
 function App(props) {
   return (
@@ -18,8 +19,14 @@ function App(props) {
           <Route exact path="/forgot-password" component={ForgotPassword} />
           <ProtectedRoute
             exact
-            path="/Details"
+            path="/details"
             component={Details}
+            loginData={props.data.loginData}
+          />
+           <ProtectedRoute
+            exact
+            path="/dashboard"
+            component={Dashboard}
             loginData={props.data.loginData}
           />
         </Switch>

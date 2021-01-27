@@ -14,9 +14,9 @@ export const checkLogin = (data, callback, errorCallBack) => {
       .then((response) => {
         // dispatch(toggleLoader(false));
         if (response && response.data) {
-          callback && callback(response);
+          callback && callback(response.data);
           dispatch({
-            response,
+            data:response.data,
             type: ActionConstants.SAVE_LOGIN_DATA,
           });
         }

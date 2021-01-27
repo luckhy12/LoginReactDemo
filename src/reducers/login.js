@@ -9,7 +9,7 @@ export default function login(state = innitialData, action) {
     case ActionConstants.SAVE_LOGIN_DATA: {
       return {
         ...state,
-        loginData: action.value,
+        loginData: action.data,
       };
     }
     default:
