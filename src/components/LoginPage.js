@@ -60,7 +60,7 @@ function LoginPage(props) {
     if (loginFormValidator.allValid()) {
       props.checkLogin(loginData, (res) => {
         localStorage.setItem("token", res.token);
-        history.push("/details");
+        history.push("/dashboard");
       });
     } else {
       loginFormValidator.showMessages();
