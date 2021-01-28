@@ -8,6 +8,8 @@ import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import { useHistory } from "react-router-dom";
 import Paper from '@material-ui/core/Paper';
+import Images from 'images_remote/App';
+import Videos from 'videos_remote/App';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -53,7 +55,14 @@ export default function ButtonAppBar() {
           <Button onClick={onClickLogout} color="inherit">Logout</Button>
         </Toolbar>
       </AppBar>
-      <Paper elevation={3} className={classes.paper}>Successfully logged in</Paper>
+      <div className="Images__wrapper">
+            <h1>Search for images</h1>
+            <Images token={'887897987987978'} />
+        </div>
+        <div className="Videos__wrapper">
+            <h1>Search for videos</h1>
+            <Videos />
+        </div>
     </div>
   );
 }
