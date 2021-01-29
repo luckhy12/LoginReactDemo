@@ -5,7 +5,7 @@ import ImageList from './ImageList'
 import ImageCard from './ImageCard'
 
 
-export default (props) => {
+function App(props) {
   const [images, setImages] = useState([]);
 
   const onSubmit = async (term) => {
@@ -18,14 +18,17 @@ export default (props) => {
 
   return (
     <div className="ui container">
-      <SearchBar onSubmit={onSubmit} />
-      {props.token}
+      {props.token ? <React.Fragment>
+        <SearchBar onSubmit={onSubmit} />
       <ImageList>
         {
           images.map(image =>
             <ImageCard key={image.id} image={image} />)
         }
       </ImageList>
+      </React.Fragment>: <p>You not logged in</p>}
+      
     </div>
   )
 }
+export default App;

@@ -25,6 +25,9 @@ module.exports = {
         ]
     },
     devtool: 'source-map',
+    devServer: {
+        historyApiFallback: true,
+    },
     plugins: [
         new ModuleFederationPlugin({
             name: "test-react-app",
