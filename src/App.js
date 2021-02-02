@@ -8,11 +8,13 @@ import Details from "./components/Details";
 import ForgotPassword from "./components/ForgotPassword";
 import Register from "./components/Register";
 import Dashboard from "./components/Dashboard";
+import AppLayout from "./components/layout/AppLayout"
 
 function App(props) {
   return (
     <React.Fragment>
       <BrowserRouter>
+      <AppLayout>
         <Switch>
           <Route exact path="/" component={LoginPage} />
           <Route exact path="/register" component={Register} />
@@ -30,6 +32,7 @@ function App(props) {
             loginData={props.data.loginData}
           />
         </Switch>
+        </AppLayout>
       </BrowserRouter>
     </React.Fragment>
   );
