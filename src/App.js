@@ -1,14 +1,16 @@
 import React from "react";
-import { BrowserRouter, Switch, Route } from "react-router-dom";
+import { BrowserRouter, Switch } from "react-router-dom";
 import "./App.css";
 import { connect } from "react-redux";
 import ProtectedRoute from "./ProtectedRoute";
+import PublicRoute from "./PublicRoute";
 import LoginPage from "./components/LoginPage";
 import Details from "./components/Details";
 import ForgotPassword from "./components/ForgotPassword";
 import Register from "./components/Register";
 import Dashboard from "./components/Dashboard";
 import AppLayout from "./components/layout/AppLayout"
+import UserList from "./components/User/UserList";
 
 function App(props) {
   return (
@@ -16,20 +18,23 @@ function App(props) {
       <BrowserRouter>
       <AppLayout>
         <Switch>
-          <Route exact path="/" component={LoginPage} />
-          <Route exact path="/register" component={Register} />
-          <Route exact path="/forgot-password" component={ForgotPassword} />
+         <PublicRoute exact path="/" component={LoginPage} />
+         <PublicRoute exact path="/register" component={Register} />
+         <PublicRoute exact path="/forgot-password" component={ForgotPassword} />
           <ProtectedRoute
             exact
             path="/details"
             component={Details}
-            loginData={props.data.loginData}
           />
            <ProtectedRoute
             exact
             path="/dashboard"
             component={Dashboard}
-            loginData={props.data.loginData}
+          />
+           <ProtectedRoute
+            exact
+            path="/user"
+            component={UserList}
           />
         </Switch>
         </AppLayout>

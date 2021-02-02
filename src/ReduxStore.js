@@ -30,14 +30,19 @@ class ReduxStore {
   // Initialization of Redux Store
   initStore() {
     const middleware = applyMiddleware(thunk, logger);
+    let comp = compose(
+      middleware,
+    )
+    if(window.__REDUX_DEVTOOLS_EXTENSION__){
+      comp = compose(
+        middleware,
+          window.__REDUX_DEVTOOLS_EXTENSION__()
+      )
+    }
     this._store = createStore(
       rootReducer,
       ReduxStore.loadState(),
-      compose(
-        middleware,
-        // window.__REDUX_DEVTOOLS_EXTENSION__ &&
-        //   window.__REDUX_DEVTOOLS_EXTENSION__()
-      )
+      comp
     );
     this._store.subscribe(() => {
       ReduxStore.saveState(this._store.getState());

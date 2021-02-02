@@ -16,7 +16,7 @@ export const checkLogin = (data, callback, errorCallBack) => {
         if (response && response.data) {
           callback && callback(response.data);
           dispatch({
-            data:response.data,
+            data: response.data,
             type: ActionConstants.SAVE_LOGIN_DATA,
           });
         }
@@ -72,6 +72,33 @@ export const forgotPassword = (data, callback, errorCallBack) => {
           dispatch({
             response,
             type: ActionConstants.SAVE_LOGIN_DATA,
+          });
+        }
+      })
+      .catch((error) => {
+        errorCallBack && errorCallBack(error.response.data);
+      });
+  };
+};
+
+export const getUserList = (data, callback, errorCallBack) => {
+  return async (dispatch) => {
+    serviceCall({
+      url: "/api/User/Users",
+      method: "get",
+      data: data,
+      headers: {
+        // Authorization: "",
+        "Content-Type": "application/json-patch+json",
+      },
+    })
+      .then((response) => {
+        // dispatch(toggleLoader(false));
+        if (response && response.data) {
+          callback && callback(response);
+          dispatch({
+            response,
+            type: ActionConstants.GET_USERS_LIST,
           });
         }
       })
