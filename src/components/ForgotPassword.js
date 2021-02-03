@@ -13,6 +13,7 @@ import { connect } from "react-redux";
 import { NotificationManager } from "react-notifications";
 import FormValidator from "../validations/FormValidator";
 import { withStyles } from "@material-ui/core/styles";
+import { withRouter } from "react-router-dom";
 
 const useStyles = (theme) => ({
   paper: {
@@ -58,6 +59,7 @@ class ForgotPassword extends React.Component {
         data,
         (res) => {
           this.props.history.push("/");
+          NotificationManager.success(res);
         },
         (err) => {
           NotificationManager.error(err);
@@ -137,5 +139,5 @@ const mapStateToProps = (state) => {
   };
 };
 export default withStyles(useStyles, { withTheme: true })(
-  connect(mapStateToProps, mapDispatchToProps)(ForgotPassword)
+  withRouter(connect(mapStateToProps, mapDispatchToProps)(ForgotPassword))
 );

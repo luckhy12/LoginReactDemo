@@ -1,13 +1,14 @@
 import React from "react";
-import { DataGrid } from "@material-ui/data-grid";
+import { DataGrid, RightEmptyCell } from "@material-ui/data-grid";
 import { withStyles } from "@material-ui/core/styles";
-import { registerUser } from "../../services/UserService";
+import { getUserList } from "../../services/UserService";
 import { connect } from "react-redux";
 import { NotificationManager } from "react-notifications";
 import Container from "@material-ui/core/Container";
 import Toolbar from "@material-ui/core/Toolbar";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
+import AddEditUserModal from "./AddEditUserModal";
 
 const styles = (theme) => ({
   paper: {
@@ -16,42 +17,13 @@ const styles = (theme) => ({
     flexDirection: "column",
     alignItems: "center",
   },
+  add_btn: {
+    float: "right",
+  },
+  flex: {
+    flexGrow: 1,
+  },
 });
-
-const columns = [
-  { field: "id", headerName: "ID", width: 70 },
-  { field: "firstName", headerName: "First name", width: 130 },
-  { field: "lastName", headerName: "Last name", width: 130 },
-  {
-    field: "age",
-    headerName: "Age",
-    type: "number",
-    width: 90,
-  },
-  {
-    field: "fullName",
-    headerName: "Full name",
-    description: "This column has a value getter and is not sortable.",
-    sortable: false,
-    width: 160,
-    valueGetter: (params) =>
-      `${params.getValue("firstName") || ""} ${
-        params.getValue("lastName") || ""
-      }`,
-  },
-];
-
-const rows = [
-  { id: 1, lastName: "Snow", firstName: "Jon", age: 35 },
-  { id: 2, lastName: "Lannister", firstName: "Cersei", age: 42 },
-  { id: 3, lastName: "Lannister", firstName: "Jaime", age: 45 },
-  { id: 4, lastName: "Stark", firstName: "Arya", age: 16 },
-  { id: 5, lastName: "Targaryen", firstName: "Daenerys", age: null },
-  { id: 6, lastName: "Melisandre", firstName: null, age: 150 },
-  { id: 7, lastName: "Clifford", firstName: "Ferrara", age: 44 },
-  { id: 8, lastName: "Frances", firstName: "Rossini", age: 36 },
-  { id: 9, lastName: "Roxie", firstName: "Harvey", age: 65 },
-];
 
 class UserList extends React.Component {
   state = {
@@ -66,7 +38,21 @@ class UserList extends React.Component {
       registerationDate: new Date(),
       role: "",
     },
+    userList: [],
+    isOpenDialog: false,
+    action: "add",
   };
+
+  componentDidMount() {
+    let data = {
+      Calling_UserID_chr: "67dd24d2-bfb9-4f49-bcd2-5a455ac12574",
+      UserID_chr: "67dd24d2-bfb9-4f49-bcd2-5a455ac12574",
+      Return_All_Rows_ysn: true,
+      Page_Index_int: 1,
+      Page_Size_int: 100,
+    };
+    this.props.getUserList(data);
+  }
 
   handleChange = async (e) => {
     let { name, value } = e.target;
@@ -74,6 +60,22 @@ class UserList extends React.Component {
       const reg_data = { ...prevState.reg_data };
       reg_data[name] = value;
       return { reg_data };
+    });
+  };
+
+  onClickAdd = async () => {
+    await this.setState((prevState) => {
+      const isOpenDialog = !prevState.isOpenDialog;
+      const action = "add";
+      return { isOpenDialog, action };
+    });
+  };
+
+  onClickEdit = async () => {
+    await this.setState((prevState) => {
+      const isOpenDialog = !prevState.isOpenDialog;
+      const action = "edit";
+      return { isOpenDialog, action };
     });
   };
 
@@ -92,35 +94,84 @@ class UserList extends React.Component {
 
   render() {
     const { classes } = this.props;
+    const columns = [
+      { field: "clientName", headerName: "Client name", width: 150 },
+      {
+        field: "fullName",
+        headerName: "Name",
+        width: 150,
+        renderCell: (params) => {
+          return params.row.firstName + " " + params.row.lastName;
+        },
+      },
+      { field: "discriminator", headerName: "Discriminator", width: 130 },
+      { field: "email", headerName: "Email", flex: 1 },
+      { field: "emailConfirmed", headerName: "Email Varified", width: 150 },
+      { field: "roleName", headerName: "Role", width: 150 },
+      {
+        field: "acction",
+        headerName: "Actions",
+        description: "This column has a value getter and is not sortable.",
+        sortable: false,
+        renderCell: (params) => {
+          return (
+            <Toolbar>
+              <Button
+                className="mr-2"
+                variant="contained"
+                onClick={this.onClickEdit}
+                color="primary"
+              >
+                Edit
+              </Button>
+              <Button variant="contained" color="primary">
+                Delete
+              </Button>
+            </Toolbar>
+          );
+        },
+        flex: 1,
+      },
+    ];
     return (
       <Container component="main">
         <div style={{ height: 400, width: "100%" }}>
           <Typography variant="h4" gutterBottom>
-           Users
+            Users
           </Typography>
           <Toolbar>
-            <Button variant="contained" color="primary">
+            <div className={classes.flex}></div>
+            <Button
+              className={classes.add_btn}
+              variant="contained"
+              color="primary"
+              onClick={this.onClickAdd}
+            >
               Add
             </Button>
           </Toolbar>
           <DataGrid
-            rows={rows}
+            rows={this.props.usersListData}
             columns={columns}
             pageSize={5}
-            checkboxSelection
           />
         </div>
+        <AddEditUserModal
+          onClickAdd={this.onClickAdd}
+          isOpenDialog={this.state.isOpenDialog}
+          action={this.state.action}
+        />
       </Container>
     );
   }
 }
 
 const mapDispatchToProps = {
-  registerUser,
+  getUserList,
 };
 const mapStateToProps = (state) => {
   return {
-    data: state.user.usersListData,
+    usersListData: state.user.usersListData,
   };
 };
 export default withStyles(styles, { withTheme: true })(

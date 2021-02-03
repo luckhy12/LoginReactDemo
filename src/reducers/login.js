@@ -12,6 +12,12 @@ export default function login(state = innitialData, action) {
         loginData: action.data,
       };
     }
+    case ActionConstants.UNAUTH_USER: {
+      return {
+        ...state,
+        loginData: {},
+      };
+    }
     default:
       return { ...state };
   }

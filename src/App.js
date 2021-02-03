@@ -18,7 +18,7 @@ function App(props) {
       <BrowserRouter>
       <AppLayout>
         <Switch>
-         <PublicRoute exact path="/" component={LoginPage} />
+         <PublicRoute exact path={["/", "/login"]} component={LoginPage} />
          <PublicRoute exact path="/register" component={Register} />
          <PublicRoute exact path="/forgot-password" component={ForgotPassword} />
           <ProtectedRoute

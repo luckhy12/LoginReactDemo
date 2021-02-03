@@ -1,27 +1,29 @@
-import React, { Component } from "react";
+import React, { Component, useState } from "react";
 import { connect } from "react-redux";
 import { withStyles } from "@material-ui/core/styles";
 import AppHeaderBarDrawer from "../../components/layout/AppHeaderBarDrawer";
+import UnAuthHeader from "../../components/layout/UnAuthHeader";
 import { registerUser } from "../../services/UserService";
+import CircularProgress from '@material-ui/core/CircularProgress';
 // import Footer from "common/components/Footer/Footer";
 
 const styles = (theme) => ({
-	content: {
-		flexGrow: 1,
-		padding: theme.spacing(3),
-	  },
-	  root: {
-		display: "flex",
-	  },
-	  toolbar: {
-		display: "flex",
-		alignItems: "center",
-		justifyContent: "flex-end",
-		padding: theme.spacing(0, 1),
-		// necessary for content to be below app bar
-		...theme.mixins.toolbar,
-	  },
-  });
+  content: {
+    flexGrow: 1,
+    padding: theme.spacing(1),
+  },
+  root: {
+    display: "flex",
+  },
+  toolbar: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "flex-end",
+    padding: theme.spacing(0, 1),
+    // necessary for content to be below app bar
+    ...theme.mixins.toolbar,
+  },
+});
 
 class AppLayout extends Component {
   componentDidMount() {
@@ -30,34 +32,27 @@ class AppLayout extends Component {
     }
   }
   render() {
-	const { classes } = this.props;
-
+    const { classes } = this.props;
     return (
       <div className={classes.root}>
-        {localStorage.token ? (
-          <AppHeaderBarDrawer />
-        ) : (
-          null
-        )}
+        {/* <CircularProgress /> */}
+        {this.props.data.token ? <AppHeaderBarDrawer /> : <UnAuthHeader />}
         <main className={classes.content}>
           <div className={classes.toolbar} />
-		  {this.props.children}
+          {this.props.children}
         </main>
-        {/* {this.props.location.pathname == "/login" ||
-          this.props.location.pathname == "/registration"} */}
-        {/* <Footer /> */}
       </div>
     );
   }
 }
 const mapDispatchToProps = {
-	registerUser,
+  registerUser,
+};
+const mapStateToProps = (state) => {
+  return {
+    data: state.login.loginData,
   };
-  const mapStateToProps = (state) => {
-	return {
-	  data: state.login,
-	};
-  };
+};
 export default withStyles(styles, { withTheme: true })(
   connect(mapStateToProps, mapDispatchToProps)(AppLayout)
 );

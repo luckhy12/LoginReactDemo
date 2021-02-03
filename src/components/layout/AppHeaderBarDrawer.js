@@ -19,7 +19,9 @@ import PersonIcon from "@material-ui/icons/Person";
 import Button from "@material-ui/core/Button";
 import { useHistory } from "react-router-dom";
 import DashboardIcon from "@material-ui/icons/Dashboard";
-import Link from "@material-ui/core/Link";
+import { Link } from "react-router-dom";
+import { logout } from "../../services/UserService";
+import { connect } from "react-redux";
 
 const drawerWidth = 240;
 
@@ -79,25 +81,24 @@ const useStyles = makeStyles((theme) => ({
     // necessary for content to be below app bar
     ...theme.mixins.toolbar,
   },
-  content: {
+  title: {
     flexGrow: 1,
-    padding: theme.spacing(3),
   },
   logout: {
-    flexGrow: 1,
-    float: 'right',
+    float: "right",
   },
 }));
 
-export default function MiniDrawer() {
+const MiniDrawer = function (props) {
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
+  const [selectedNav, setSelectedNav] = React.useState("Dashboard");
   let history = useHistory();
 
   const onClickLogout = () => {
     localStorage.clear();
-    history.push("/");
+    props.logout();
   };
 
   const handleDrawerOpen = () => {
@@ -129,7 +130,12 @@ export default function MiniDrawer() {
           >
             <MenuIcon />
           </IconButton>
-          <Button onClick={onClickLogout} className={classes.logout} color="inherit">
+          <div className={classes.title}></div>
+          <Button
+            onClick={onClickLogout}
+            className={classes.logout}
+            color="inherit"
+          >
             Logout
           </Button>
         </Toolbar>
@@ -158,24 +164,39 @@ export default function MiniDrawer() {
         </div>
         <Divider />
         <List>
-          <Link href="/dashboard">
-            <ListItem button key={"Dashboard"}>
+          <Link to="/dashboard">
+            <ListItem
+              button
+              key={"Dashboard"}
+              onClick={(e) => setSelectedNav("Dashboard")}
+              selected={selectedNav === "Dashboard"}
+            >
               <ListItemIcon>
                 <DashboardIcon />
               </ListItemIcon>
               <ListItemText primary={"Dashbaord"} />
             </ListItem>
           </Link>
-          <Link href="/user">
-            <ListItem button key={"User"}>
+          <Link to="/user">
+            <ListItem
+              button
+              key={"User"}
+              onClick={(e) => setSelectedNav("User")}
+              selected={selectedNav === "User"}
+            >
               <ListItemIcon>
                 <PersonIcon />
               </ListItemIcon>
               <ListItemText primary={"User"} />
             </ListItem>
           </Link>
-          <Link href="/client">
-            <ListItem button key={"User"}>
+          <Link to="/client">
+            <ListItem
+              button
+              key={"Client"}
+              onClick={(e) => setSelectedNav("Client")}
+              selected={selectedNav === "Client"}
+            >
               <ListItemIcon>
                 <AssignmentIndIcon />
               </ListItemIcon>
@@ -186,4 +207,13 @@ export default function MiniDrawer() {
       </Drawer>
     </div>
   );
-}
+};
+const mapDispatchToProps = {
+  logout,
+};
+const mapStateToProps = (state) => {
+  return {
+    data: state.login,
+  };
+};
+export default connect(mapStateToProps, mapDispatchToProps)(MiniDrawer);

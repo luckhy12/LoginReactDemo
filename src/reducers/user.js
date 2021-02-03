@@ -1,16 +1,14 @@
 // import { get } from "lodash";
-import ActionConstants from '../config/AppConstants';
+import ActionConstants from "../config/AppConstants";
 const innitialData = {
-  usersListData: {
-      data : [],
-  },
+  usersListData: {},
 };
 export default function user(state = innitialData, action) {
   switch (action.type) {
     case ActionConstants.GET_USERS_LIST: {
       return {
         ...state,
-        loginData: action.data,
+        usersListData: action.data,
       };
     }
     default:
