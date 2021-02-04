@@ -9,6 +9,7 @@ export function serviceCallAuth(requestData) {
       headers: {
         Authorization: "Bearer  " + localStorage.token,
         "Content-Type": "application/json-patch+json",
+        "Access-Control-Allow-Origin": "*",
       },
       url: url,
     };

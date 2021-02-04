@@ -1,10 +1,10 @@
-import React, { Component, useState } from "react";
+import React, { Component } from "react";
 import { connect } from "react-redux";
 import { withStyles } from "@material-ui/core/styles";
 import AppHeaderBarDrawer from "../../components/layout/AppHeaderBarDrawer";
 import UnAuthHeader from "../../components/layout/UnAuthHeader";
 import { registerUser } from "../../services/UserService";
-import CircularProgress from '@material-ui/core/CircularProgress';
+// import CircularProgress from '@material-ui/core/CircularProgress';
 // import Footer from "common/components/Footer/Footer";
 
 const styles = (theme) => ({

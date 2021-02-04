@@ -8,6 +8,7 @@ import { Provider } from "react-redux";
 import "react-notifications/lib/notifications.css";
 import { NotificationContainer } from "react-notifications";
 import 'bootstrap/dist/css/bootstrap.min.css';
+import './scss/index.scss';
 
 ReactDOM.render(
   <Provider store={ReduxStore.getDefaultStore().store}>

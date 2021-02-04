@@ -1,0 +1,85 @@
+//
+// Application Variables
+//-----------------------------------------------------
+
+
+// =============== Primary Colors ================== // 
+
+$primary-color: #0051A5;
+$primary:#0051A5;
+$primary-hover: #003872;
+
+// =============== Secondary Colors ================ //
+$secondary-color: #0F2F5F;
+$secondary: #0F2F5F;
+$secondary-hover: #EEF6FE;
+
+// ============== Tertiary Colors ================= //
+$danger-color: #d74338;
+$danger: #d74338;
+$danger-hover: #bb321f;
+
+$warning-hover: #D98F00;
+$warning: #D98F00;
+
+$color-warning: #F1A208;
+
+$color-success: #06A77D;
+$color-green-dark: #058B64;
+$color-green-light: #40CAA8;
+
+// ============== Gray Scale Colors ================ //
+
+$normal-gray: #28374B;
+$dark-gray: #18283C;
+$light-gray: #394D66;
+$light-gray-outline : #D7DDE3;
+
+//================================================== //
+
+// ============== Blue Scale Colors ================ //
+
+$fill-light-blue: #589DFE;
+// $lighter-gray: #FAFAFA;
+// $light-gray: #F2F2F2;
+
+// $bg-lighter: $lighter-gray;
+$bg-light: $light-gray;
+
+$background-secondary: #9B9B9B;
+$background-color: #FAFAFA;
+$db-gray: #9B9B9B;
+$border-color: $secondary-color;
+$border-color-light: #EEE;
+
+// Font Size Variant
+$font-sm: 12px;
+$font-md: 14px;
+$font-lg: 16px;
+$font-xlg: 18px;
+
+// Font weights
+$text-light: 300;
+$text-regular: 400;
+$text-bold: 600;
+
+// Headings
+
+h1 { 
+    font-size: 34px;
+}
+h2 {
+    font-size: 24px;
+}
+h3 {
+    font-size: 22px;
+}
+
+// text-color
+$color-text-muted: #9B9B9B;
+$color-text-default: #4A4A4A;
+$color-text-fill: #9EAFC5;
+// $white:    #fff !default;
+
+// New Changes
+$font-xxl: 34px;

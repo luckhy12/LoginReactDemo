@@ -1,7 +1,7 @@
 import React from "react";
-import { DataGrid, RightEmptyCell } from "@material-ui/data-grid";
+import { DataGrid } from "@material-ui/data-grid";
 import { withStyles } from "@material-ui/core/styles";
-import { getUserList } from "../../services/UserService";
+import { getUserList, deleteUser } from "../../services/UserService";
 import { connect } from "react-redux";
 import { NotificationManager } from "react-notifications";
 import Container from "@material-ui/core/Container";
@@ -9,6 +9,7 @@ import Toolbar from "@material-ui/core/Toolbar";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import AddEditUserModal from "./AddEditUserModal";
+import ConfirmationDialog from "../utility/ConfirmationDialog";
 
 const styles = (theme) => ({
   paper: {
@@ -38,12 +39,18 @@ class UserList extends React.Component {
       registerationDate: new Date(),
       role: "",
     },
+    selectedUser: {},
     userList: [],
     isOpenDialog: false,
+    isOpenDeleteDialog: false,
     action: "add",
   };
 
   componentDidMount() {
+    this.reloadList();
+  }
+
+  reloadList = () => {
     let data = {
       Calling_UserID_chr: "67dd24d2-bfb9-4f49-bcd2-5a455ac12574",
       UserID_chr: "67dd24d2-bfb9-4f49-bcd2-5a455ac12574",
@@ -52,7 +59,7 @@ class UserList extends React.Component {
       Page_Size_int: 100,
     };
     this.props.getUserList(data);
-  }
+  };
 
   handleChange = async (e) => {
     let { name, value } = e.target;
@@ -71,7 +78,15 @@ class UserList extends React.Component {
     });
   };
 
-  onClickEdit = async () => {
+  onHandleModel = async (name) => {
+    let value = this.state[name];
+    await this.setState({
+      [name]: !value,
+    });
+  };
+
+  onClickEdit = async (row) => {
+    await this.setState({ selectedUser: row });
     await this.setState((prevState) => {
       const isOpenDialog = !prevState.isOpenDialog;
       const action = "edit";
@@ -79,12 +94,18 @@ class UserList extends React.Component {
     });
   };
 
-  onSubmitForm = (event) => {
-    event.preventDefault();
-    this.props.registerUser(
-      this.state.reg_data,
+  onClickDelete = async (row) => {
+    await this.setState({ selectedUser: row });
+    await this.onHandleModel("isOpenDeleteDialog");
+  };
+
+  deleteUser = async () => {
+    const { selectedUser } = this.state;
+    this.props.deleteUser(
+      selectedUser,
       (res) => {
-        this.props.history.push("/details");
+        NotificationManager.success(res);
+        this.reloadList();
       },
       (err) => {
         NotificationManager.error(err);
@@ -119,12 +140,16 @@ class UserList extends React.Component {
               <Button
                 className="mr-2"
                 variant="contained"
-                onClick={this.onClickEdit}
+                onClick={(e) => this.onClickEdit(params.row)}
                 color="primary"
               >
                 Edit
               </Button>
-              <Button variant="contained" color="primary">
+              <Button
+                onClick={(e) => this.onClickDelete(params.row)}
+                variant="contained"
+                color="primary"
+              >
                 Delete
               </Button>
             </Toolbar>
@@ -135,7 +160,7 @@ class UserList extends React.Component {
     ];
     return (
       <Container component="main">
-        <div style={{ height: 400, width: "100%" }}>
+        <div style={{ height: "90vh", width: "100%" }}>
           <Typography variant="h4" gutterBottom>
             Users
           </Typography>
@@ -153,14 +178,28 @@ class UserList extends React.Component {
           <DataGrid
             rows={this.props.usersListData}
             columns={columns}
-            pageSize={5}
+            pageSize={10}
+            disableColumnMenu={true}
           />
         </div>
-        <AddEditUserModal
-          onClickAdd={this.onClickAdd}
-          isOpenDialog={this.state.isOpenDialog}
-          action={this.state.action}
-        />
+        {this.state.isOpenDialog && (
+          <AddEditUserModal
+            onClickAdd={this.onClickAdd}
+            isOpenDialog={this.state.isOpenDialog}
+            action={this.state.action}
+            reloadList={this.reloadList}
+            selectedUser={this.state.selectedUser}
+          />
+        )}
+        {this.state.isOpenDeleteDialog && (
+          <ConfirmationDialog
+            onHandleModel={(e) => this.onHandleModel("isOpenDeleteDialog")}
+            isOpenDialog={this.state.isOpenDeleteDialog}
+            action={(e) => this.deleteUser(this.state.selectedUser)}
+            title={"Delete User"}
+            content={"Are you sure want to delete ?"}
+          />
+        )}
       </Container>
     );
   }
@@ -168,6 +207,7 @@ class UserList extends React.Component {
 
 const mapDispatchToProps = {
   getUserList,
+  deleteUser,
 };
 const mapStateToProps = (state) => {
   return {

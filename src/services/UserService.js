@@ -29,23 +29,15 @@ export const checkLogin = (data, callback, errorCallBack) => {
 
 export const registerUser = (data, callback, errorCallBack) => {
   return async (dispatch) => {
-    serviceCall({
-      url: "/api/Account/Register",
+    serviceCallAuth({
+      url: "/api/User/AddUser",
       method: "post",
       data: data,
-      headers: {
-        // Authorization: "",
-        "Content-Type": "application/json-patch+json",
-      },
     })
       .then((response) => {
         // dispatch(toggleLoader(false));
         if (response && response.data) {
           callback && callback(response);
-          dispatch({
-            response,
-            type: ActionConstants.SAVE_LOGIN_DATA,
-          });
         }
       })
       .catch((error) => {
@@ -100,10 +92,67 @@ export const getUserList = (data, callback, errorCallBack) => {
   };
 };
 
+export const getRoles = (data, callback, errorCallBack) => {
+  return async (dispatch) => {
+    serviceCallAuth({
+      url: "/api/Role",
+      method: "get",
+      data: data,
+    })
+      .then((response) => {
+        // dispatch(toggleLoader(false));
+        if (response && response.data) {
+          callback && callback(response.data);
+        }
+      })
+      .catch((error) => {
+        errorCallBack && errorCallBack(error && error.response && error.response.data);
+      });
+  };
+};
+
 export const logout = (data, callback, errorCallBack) => {
   return async (dispatch) => {
     dispatch({
       type: ActionConstants.UNAUTH_USER,
     });
+  };
+};
+
+export const updateUser = (data, callback, errorCallBack) => {
+  return async (dispatch) => {
+    serviceCallAuth({
+      url: "/api/User/UpdateUser?id="+data.id,
+      method: "put",
+      data: data,
+    })
+      .then((response) => {
+        // dispatch(toggleLoader(false));
+        if (response) {
+          callback && callback(response.data);
+        }
+      })
+      .catch((error) => {
+        errorCallBack && errorCallBack(error && error.response && error.response.data);
+      });
+  };
+};
+
+export const deleteUser = (data, callback, errorCallBack) => {
+  return async (dispatch) => {
+    serviceCallAuth({
+      url: "/api/User/DeleteUser?id="+data.id,
+      method: "delete",
+      data: data,
+    })
+      .then((response) => {
+        // dispatch(toggleLoader(false));
+        if (response) {
+          callback && callback(response.data);
+        }
+      })
+      .catch((error) => {
+        errorCallBack && errorCallBack(error && error.response && error.response.data);
+      });
   };
 };

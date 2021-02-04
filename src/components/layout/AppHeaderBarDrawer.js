@@ -17,7 +17,7 @@ import ListItemText from "@material-ui/core/ListItemText";
 import AssignmentIndIcon from "@material-ui/icons/AssignmentInd";
 import PersonIcon from "@material-ui/icons/Person";
 import Button from "@material-ui/core/Button";
-import { useHistory } from "react-router-dom";
+// import { useHistory } from "react-router-dom";
 import DashboardIcon from "@material-ui/icons/Dashboard";
 import { Link } from "react-router-dom";
 import { logout } from "../../services/UserService";
@@ -94,7 +94,7 @@ const MiniDrawer = function (props) {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
   const [selectedNav, setSelectedNav] = React.useState("Dashboard");
-  let history = useHistory();
+  // let history = useHistory();
 
   const onClickLogout = () => {
     localStorage.clear();
