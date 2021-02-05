@@ -34,7 +34,7 @@ class AddEditUserModal extends React.Component {
   };
 
   render() {
-    const { classes } = this.props;
+    // const { classes } = this.props;
     return (
       <div>
         <Dialog
@@ -49,10 +49,10 @@ class AddEditUserModal extends React.Component {
             <Container component="main">{this.props.content}</Container>
           </DialogContent>
           <DialogActions>
-            <Button onClick={this.handleClose} color="primary">
+            <Button onClick={this.handleClose} variant="contained" color="primary">
               {this.props.noLbl || 'No'}
             </Button>
-            <Button type="submit" onClick={this.onAccept} color="primary">
+            <Button type="submit" onClick={this.onAccept} variant="contained" color="primary">
               {this.props.yesLbl || 'Yes'}
             </Button>
           </DialogActions>

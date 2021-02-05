@@ -11,6 +11,7 @@ import Register from "./components/Register";
 import Dashboard from "./components/Dashboard";
 import AppLayout from "./components/layout/AppLayout"
 import UserList from "./components/User/UserList";
+import RolesPage from "./components/Roles/RolesPage";
 
 function App(props) {
   return (
@@ -35,6 +36,11 @@ function App(props) {
             exact
             path="/user"
             component={UserList}
+          />
+           <ProtectedRoute
+            exact
+            path="/roles"
+            component={RolesPage}
           />
         </Switch>
         </AppLayout>

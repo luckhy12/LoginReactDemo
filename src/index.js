@@ -7,14 +7,13 @@ import ReduxStore from "./ReduxStore";
 import { Provider } from "react-redux";
 import "react-notifications/lib/notifications.css";
 import { NotificationContainer } from "react-notifications";
-import 'bootstrap/dist/css/bootstrap.min.css';
 import './scss/index.scss';
 
 ReactDOM.render(
   <Provider store={ReduxStore.getDefaultStore().store}>
-    <React.StrictMode>
+    {/* <React.StrictMode> */}
       <App />
-    </React.StrictMode>
+    {/* </React.StrictMode> */}
     <NotificationContainer />
   </Provider>,
   document.getElementById("root")

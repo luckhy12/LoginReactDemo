@@ -70,9 +70,5 @@ const useStyles = makeStyles((theme) => ({
 
 export default function MiniDrawer() {
   const classes = useStyles();
-    return (
-    <div>
-      succsessfully login
-    </div>
-  );
+  return <div>Dashboard</div>;
 }

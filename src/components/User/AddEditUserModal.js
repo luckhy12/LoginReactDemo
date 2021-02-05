@@ -17,6 +17,7 @@ import FormControl from "@material-ui/core/FormControl";
 import InputLabel from "@material-ui/core/InputLabel";
 import { NotificationManager } from "react-notifications";
 import FormValidator from "../../validations/FormValidator";
+import Loader from "../utility/Loader";
 
 const styles = (theme) => ({
   formControl: {
@@ -41,13 +42,14 @@ class AddEditUserModal extends React.Component {
         // password: "",
       },
       userRoles: [],
+      isLoading: true,
     };
     this.regUserFormValidator = new FormValidator();
   }
 
   componentDidMount = async () => {
     this.props.getRoles(null, (res) => {
-      this.setState({ userRoles: res });
+      this.setState({ userRoles: res, isLoading: false });
     });
     if (this.props.action === "edit") {
       const { selectedUser } = this.props;
@@ -59,7 +61,7 @@ class AddEditUserModal extends React.Component {
         reg_data["lastName"] = selectedUser.lastName;
         reg_data["roleId"] = selectedUser.roleId;
         reg_data["id"] = selectedUser.id;
-        reg_data["securitystamp"] = "" ;
+        reg_data["securitystamp"] = "";
         return { reg_data };
       });
     }
@@ -260,14 +262,16 @@ class AddEditUserModal extends React.Component {
               </Container>
             </DialogContent>
             <DialogActions>
-              <Button onClick={this.handleClose} color="primary">
+              <Button onClick={this.handleClose} variant="contained" color="primary">
                 Cancel
               </Button>
-              <Button type="submit" color="primary">
+              <Button type="submit" variant="contained" color="primary">
                 Save
               </Button>
             </DialogActions>
           </form>
+
+          {this.state.isLoading && <Loader type="full-screen" />}
         </Dialog>
       </div>
     );

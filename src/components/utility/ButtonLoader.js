@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Button from "@material-ui/core/Button";
 
 class ButtonLoader extends Component {
 	constructor(props) {
@@ -16,17 +17,18 @@ class ButtonLoader extends Component {
 	}
 	render() {
 		return (
-			<button
+			<Button
 				ref={node => {
 					this.submitBtn = node;
 				}}
-				type={this.props.type}
-				className={this.props.className || ''}
-				onClick={this.props.onClick}
+				// type={this.props.type}
+				// className={this.props.className || ''}
+				{...this.props}
+				// onClick={this.props.onClick}
 				disabled={this.props.disabled || this.props.isLoading}
 			>
 				{this.props.label} {this.props.isLoading && <span className="spinner" />}
-			</button>
+			</Button>
 		);
 	}
 }

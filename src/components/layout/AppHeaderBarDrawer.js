@@ -190,17 +190,17 @@ const MiniDrawer = function (props) {
               <ListItemText primary={"User"} />
             </ListItem>
           </Link>
-          <Link to="/client">
+          <Link to="/roles">
             <ListItem
               button
-              key={"Client"}
-              onClick={(e) => setSelectedNav("Client")}
-              selected={selectedNav === "Client"}
+              key={"Roles"}
+              onClick={(e) => setSelectedNav("Roles")}
+              selected={selectedNav === "Roles"}
             >
               <ListItemIcon>
                 <AssignmentIndIcon />
               </ListItemIcon>
-              <ListItemText primary={"Client"} />
+              <ListItemText primary={"Roles"} />
             </ListItem>
           </Link>
         </List>

@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import Avatar from "@material-ui/core/Avatar";
-import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
@@ -17,6 +16,7 @@ import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
 import FormValidator from "../validations/FormValidator";
 import { NotificationManager } from "react-notifications";
+import ButtonLoader from "./utility/ButtonLoader";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -45,6 +45,7 @@ function LoginPage(props) {
   const classes = useStyles();
   const [loginData, setLoginData] = useState({ email: "", password: "" });
   const [value, setValue] = useState(0);
+  const [isBtnClicked, setIsBtnClicked] = useState(false);
 
   const onChangeEmail = (event) => {
     const email = event.target.value;
@@ -59,6 +60,7 @@ function LoginPage(props) {
   const onSubmitForm = (event) => {
     event.preventDefault();
     if (loginFormValidator.allValid()) {
+      setIsBtnClicked(true);
       props.checkLogin(
         loginData,
         (res) => {
@@ -66,6 +68,7 @@ function LoginPage(props) {
           history.push("/dashboard");
         },
         (err) => {
+          setIsBtnClicked(false);
           NotificationManager.error(err);
         }
       );
@@ -128,15 +131,15 @@ function LoginPage(props) {
             control={<Checkbox value="remember" color="primary" />}
             label="Remember me"
           />
-          <Button
+          <ButtonLoader
             type="submit"
             fullWidth
             variant="contained"
             color="primary"
             className={classes.submit}
-          >
-            Sign In
-          </Button>
+            label={"Sign In"}
+            isLoading={isBtnClicked}
+          />
           <Grid container>
             <Grid item xs>
               <Link href="/forgot-password" variant="body2">

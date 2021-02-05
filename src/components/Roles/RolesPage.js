@@ -1,14 +1,14 @@
 import React from "react";
 import { DataGrid } from "@material-ui/data-grid";
 import { withStyles } from "@material-ui/core/styles";
-import { getUserList, deleteUser } from "../../services/UserService";
+import { getAllRolesList, deleteRole } from "../../services/roles/RolesService";
 import { connect } from "react-redux";
 import { NotificationManager } from "react-notifications";
 import Container from "@material-ui/core/Container";
 import Toolbar from "@material-ui/core/Toolbar";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
-import AddEditUserModal from "./AddEditUserModal";
+import AddEditRolesModal from "./AddEditRolesModal";
 import ConfirmationDialog from "../utility/ConfirmationDialog";
 import Loader from "../utility/Loader";
 
@@ -27,21 +27,9 @@ const styles = (theme) => ({
   },
 });
 
-class UserList extends React.Component {
+class RolesPage extends React.Component {
   state = {
-    reg_data: {
-      email: "",
-      password: "",
-      firstName: "",
-      lastName: "",
-      clientName: "",
-      phoneNumber: "",
-      phoneNumberType: "",
-      registerationDate: new Date(),
-      role: "",
-    },
-    selectedUser: {},
-    userList: [],
+    selectedRole: {},
     isOpenDialog: false,
     isOpenDeleteDialog: false,
     action: "add",
@@ -57,12 +45,11 @@ class UserList extends React.Component {
     const { userId } = this.props.profileData;
     let data = {
       Calling_UserID_chr: userId,
-      UserID_chr: userId,
       Return_All_Rows_ysn: true,
       Page_Index_int: 1,
       Page_Size_int: 100,
     };
-    await this.props.getUserList(data);
+    await this.props.getAllRolesList(data);
   };
 
   handleChange = async (e) => {
@@ -90,7 +77,7 @@ class UserList extends React.Component {
   };
 
   onClickEdit = async (row) => {
-    await this.setState({ selectedUser: row });
+    await this.setState({ selectedRole: row });
     await this.setState((prevState) => {
       const isOpenDialog = !prevState.isOpenDialog;
       const action = "edit";
@@ -99,14 +86,14 @@ class UserList extends React.Component {
   };
 
   onClickDelete = async (row) => {
-    await this.setState({ selectedUser: row });
+    await this.setState({ selectedRole: row });
     await this.onHandleModel("isOpenDeleteDialog");
   };
 
-  deleteUser = async () => {
-    const { selectedUser } = this.state;
-    this.props.deleteUser(
-      selectedUser,
+  deleteRole = async () => {
+    const { selectedRole } = this.state;
+    this.props.deleteRole(
+      selectedRole,
       (res) => {
         NotificationManager.success(res);
         this.reloadList();
@@ -120,19 +107,8 @@ class UserList extends React.Component {
   render() {
     const { classes } = this.props;
     const columns = [
-      { field: "clientName", headerName: "Client name", width: 150 },
-      {
-        field: "fullName",
-        headerName: "Name",
-        width: 150,
-        renderCell: (params) => {
-          return params.row.firstName + " " + params.row.lastName;
-        },
-      },
-      { field: "discriminator", headerName: "Discriminator", width: 130 },
-      { field: "email", headerName: "Email", flex: 1 },
-      { field: "emailConfirmed", headerName: "Email Varified", width: 150 },
-      { field: "roleName", headerName: "Role", width: 150 },
+      { field: "name", headerName: "Name", width: 250 },
+      { field: "isDeleted", headerName: "Is Deleted", width: 150 },
       {
         field: "acction",
         headerName: "Actions",
@@ -165,7 +141,7 @@ class UserList extends React.Component {
       <Container component="main">
         <div className="mb-5">
           <Typography variant="h4" gutterBottom>
-            Users
+            Roles
           </Typography>
           <Toolbar>
             <div className={classes.flex}></div>
@@ -179,7 +155,7 @@ class UserList extends React.Component {
             </Button>
           </Toolbar>
           <DataGrid
-            rows={this.props.usersListData}
+            rows={this.props.allRolesList}
             columns={columns}
             pageSize={10}
             disableColumnMenu={true}
@@ -188,19 +164,19 @@ class UserList extends React.Component {
         </div>
         {this.state.isLoading && <Loader type="full-screen" />}
         {this.state.isOpenDialog && (
-          <AddEditUserModal
+          <AddEditRolesModal
             onClickAdd={this.onClickAdd}
             isOpenDialog={this.state.isOpenDialog}
             action={this.state.action}
             reloadList={this.reloadList}
-            selectedUser={this.state.selectedUser}
+            selectedRole={this.state.selectedRole}
           />
         )}
         {this.state.isOpenDeleteDialog && (
           <ConfirmationDialog
             onHandleModel={(e) => this.onHandleModel("isOpenDeleteDialog")}
             isOpenDialog={this.state.isOpenDeleteDialog}
-            action={(e) => this.deleteUser(this.state.selectedUser)}
+            action={(e) => this.deleteRole(this.state.selectedRole)}
             title={"Delete User"}
             content={"Are you sure want to delete ?"}
           />
@@ -211,15 +187,15 @@ class UserList extends React.Component {
 }
 
 const mapDispatchToProps = {
-  getUserList,
-  deleteUser,
+  getAllRolesList,
+  deleteRole,
 };
 const mapStateToProps = (state) => {
   return {
-    usersListData: state.user.usersListData,
+    allRolesList: state.roles.allRolesList,
     profileData: state.login.loginData,
   };
 };
 export default withStyles(styles, { withTheme: true })(
-  connect(mapStateToProps, mapDispatchToProps)(UserList)
+  connect(mapStateToProps, mapDispatchToProps)(RolesPage)
 );
