@@ -17,6 +17,8 @@ import ListItemText from "@material-ui/core/ListItemText";
 import AssignmentIndIcon from "@material-ui/icons/AssignmentInd";
 import PersonIcon from "@material-ui/icons/Person";
 import Button from "@material-ui/core/Button";
+import PersonAddIcon from '@material-ui/icons/PersonAdd';
+
 // import { useHistory } from "react-router-dom";
 import DashboardIcon from "@material-ui/icons/Dashboard";
 import { Link } from "react-router-dom";
@@ -201,6 +203,19 @@ const MiniDrawer = function (props) {
                 <AssignmentIndIcon />
               </ListItemIcon>
               <ListItemText primary={"Roles"} />
+            </ListItem>
+          </Link>
+          <Link to="/clients">
+            <ListItem
+              button
+              key={"Clients"}
+              onClick={(e) => setSelectedNav("Clients")}
+              selected={selectedNav === "Clients"}
+            >
+              <ListItemIcon>
+                <PersonAddIcon />
+              </ListItemIcon>
+              <ListItemText primary={"Clients"} />
             </ListItem>
           </Link>
         </List>

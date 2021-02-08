@@ -1,10 +1,10 @@
 import { serviceCallAuth } from "../ServiceCall";
 import AppConstants from "../../config/AppConstants";
 
-export const createRole = (data, callback, errorCallBack) => {
+export const createClient = (data, callback, errorCallBack) => {
   return async (dispatch) => {
     serviceCallAuth({
-      url: "/api/Role/CreateRole",
+      url: "/api/Client/PostPutClient",
       method: "post",
       data: data,
     })
@@ -20,20 +20,23 @@ export const createRole = (data, callback, errorCallBack) => {
   };
 };
 
-export const getAllRolesList = (data, callback, errorCallBack) => {
+export const getAllClientsList = (data, callback, errorCallBack) => {
   return async (dispatch) => {
     serviceCallAuth({
-      url: "/api/Role/GetAllRoles",
+      url: "/api/Client/GetClient",
       method: "get",
       data: data,
     })
       .then((response) => {
         // dispatch(toggleLoader(false));
         if (response && response.data) {
-          callback && callback(response.data.tblRole);
+          callback && callback(response.data.tblClient);
+          response.data.tblClient.forEach((element, index) => {
+            response.data.tblClient[index]["id"] = index + 1;
+          });
           dispatch({
-            data: response.data.tblRole,
-            type: AppConstants.GET_ALL_ROLES,
+            data: response.data.tblClient,
+            type: AppConstants.GET_ALL_CLIENTS,
           });
         }
       })
@@ -43,7 +46,7 @@ export const getAllRolesList = (data, callback, errorCallBack) => {
   };
 };
 
-export const updateRole = (data, callback, errorCallBack) => {
+export const updateClient = (data, callback, errorCallBack) => {
   return async (dispatch) => {
     serviceCallAuth({
       url: "/api/Role/" + data.id + "?id=" + data.id,
@@ -63,10 +66,10 @@ export const updateRole = (data, callback, errorCallBack) => {
   };
 };
 
-export const deleteRole = (data, callback, errorCallBack) => {
+export const deleteClient = (data, callback, errorCallBack) => {
   return async (dispatch) => {
     serviceCallAuth({
-      url: "/api/Role/" + data.id + "?id=" + data.id,
+      url: "/api/Client/DeleteClient" + "?Calling_UserID_chr=" + data.userId+"&ClientID_lng="+data.id,
       method: "delete",
       data: data,
     })

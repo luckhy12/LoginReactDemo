@@ -12,6 +12,7 @@ import Dashboard from "./components/Dashboard";
 import AppLayout from "./components/layout/AppLayout"
 import UserList from "./components/User/UserList";
 import RolesPage from "./components/Roles/RolesPage";
+import ClientsPage from "./components/Clients/ClientsPage";
 
 function App(props) {
   return (
@@ -41,6 +42,11 @@ function App(props) {
             exact
             path="/roles"
             component={RolesPage}
+          />
+           <ProtectedRoute
+            exact
+            path="/clients"
+            component={ClientsPage}
           />
         </Switch>
         </AppLayout>
