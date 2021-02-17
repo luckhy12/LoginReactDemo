@@ -17,7 +17,10 @@ import ListItemText from "@material-ui/core/ListItemText";
 import AssignmentIndIcon from "@material-ui/icons/AssignmentInd";
 import PersonIcon from "@material-ui/icons/Person";
 import Button from "@material-ui/core/Button";
-import PersonAddIcon from '@material-ui/icons/PersonAdd';
+import PersonAddIcon from "@material-ui/icons/PersonAdd";
+import Menu from "@material-ui/core/Menu";
+import MenuItem from "@material-ui/core/MenuItem";
+import SettingsIcon from "@material-ui/icons/Settings";
 
 // import { useHistory } from "react-router-dom";
 import DashboardIcon from "@material-ui/icons/Dashboard";
@@ -96,11 +99,21 @@ const MiniDrawer = function (props) {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
   const [selectedNav, setSelectedNav] = React.useState("Dashboard");
-  // let history = useHistory();
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const isOpenSettingmenu = Boolean(anchorEl);
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
 
   const onClickLogout = () => {
     localStorage.clear();
     props.logout();
+    handleClose();
   };
 
   const handleDrawerOpen = () => {
@@ -111,6 +124,7 @@ const MiniDrawer = function (props) {
     setOpen(false);
   };
 
+  const { profileData } = props;
   return (
     <div>
       <CssBaseline />
@@ -133,13 +147,39 @@ const MiniDrawer = function (props) {
             <MenuIcon />
           </IconButton>
           <div className={classes.title}></div>
-          <Button
-            onClick={onClickLogout}
-            className={classes.logout}
-            color="inherit"
-          >
-            Logout
-          </Button>
+          <div>
+            Welcome {profileData.firstName} {profileData.lastName}
+          </div>
+          <div>
+            <IconButton
+              aria-label="more"
+              aria-controls="long-menu"
+              aria-haspopup="true"
+              onClick={handleClick}
+            >
+              <SettingsIcon />
+            </IconButton>
+            <Menu
+              id="long-menu"
+              anchorEl={anchorEl}
+              keepMounted
+              open={isOpenSettingmenu}
+              onClose={handleClose}
+              PaperProps={{
+                style: {
+                  maxHeight: 20 * 4.5,
+                  width: "20ch",
+                },
+              }}
+            >
+              <MenuItem key={"change_password"} onClick={handleClose}>
+                <Link to="/change-password">{"Change Password"}</Link>
+              </MenuItem>
+              <MenuItem key={"logout"} onClick={onClickLogout}>
+                {"Logout"}
+              </MenuItem>
+            </Menu>
+          </div>
         </Toolbar>
       </AppBar>
       <Drawer
@@ -172,6 +212,7 @@ const MiniDrawer = function (props) {
               key={"Dashboard"}
               onClick={(e) => setSelectedNav("Dashboard")}
               selected={selectedNav === "Dashboard"}
+              title="Dashboard"
             >
               <ListItemIcon>
                 <DashboardIcon />
@@ -185,6 +226,7 @@ const MiniDrawer = function (props) {
               key={"User"}
               onClick={(e) => setSelectedNav("User")}
               selected={selectedNav === "User"}
+              title="User"
             >
               <ListItemIcon>
                 <PersonIcon />
@@ -198,6 +240,7 @@ const MiniDrawer = function (props) {
               key={"Roles"}
               onClick={(e) => setSelectedNav("Roles")}
               selected={selectedNav === "Roles"}
+              title="Roles"
             >
               <ListItemIcon>
                 <AssignmentIndIcon />
@@ -211,6 +254,7 @@ const MiniDrawer = function (props) {
               key={"Clients"}
               onClick={(e) => setSelectedNav("Clients")}
               selected={selectedNav === "Clients"}
+              title="Clients"
             >
               <ListItemIcon>
                 <PersonAddIcon />
@@ -228,7 +272,7 @@ const mapDispatchToProps = {
 };
 const mapStateToProps = (state) => {
   return {
-    data: state.login,
+    profileData: state.login.loginData,
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(MiniDrawer);

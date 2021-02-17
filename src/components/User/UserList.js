@@ -120,26 +120,43 @@ class UserList extends React.Component {
   render() {
     const { classes } = this.props;
     const columns = [
-      { field: "clientName", headerName: "Client name", width: 150 },
+      {
+        field: "clientName",
+        headerName: "Client Name",
+        width: 150,
+        sortDirection: "asc",
+        sortable: true,
+      },
       {
         field: "fullName",
         headerName: "Name",
         width: 150,
-        renderCell: (params) => {
-          return params.row.firstName + " " + params.row.lastName;
-        },
+        sortable: true,
+        valueGetter: (params) =>
+      `${params.getValue('firstName') || ''} ${params.getValue('lastName') || ''}`,
       },
-      { field: "discriminator", headerName: "Discriminator", width: 130 },
-      { field: "email", headerName: "Email", flex: 1 },
-      { field: "emailConfirmed", headerName: "Email Varified", width: 150 },
-      { field: "roleName", headerName: "Role", width: 150 },
+      {
+        field: "discriminator",
+        headerName: "Discriminator",
+        width: 130,
+        sortable: true,
+      },
+      { field: "email", headerName: "Email", flex: 1, sortable: true },
+      {
+        field: "emailConfirmed",
+        headerName: "Email Varified",
+        width: 150,
+        sortable: true,
+      },
+      { field: "roleName", headerName: "Role", width: 150, sortable: true },
       {
         field: "acction",
         headerName: "Actions",
         sortable: false,
+        align: "right",
         renderCell: (params) => {
           return (
-            <Toolbar>
+            <div className={classes.flex}>
               <Button
                 className="mr-2"
                 variant="contained"
@@ -155,7 +172,7 @@ class UserList extends React.Component {
               >
                 Delete
               </Button>
-            </Toolbar>
+            </div>
           );
         },
         flex: 1,
@@ -167,7 +184,7 @@ class UserList extends React.Component {
           <Typography variant="h4" gutterBottom>
             Users
           </Typography>
-          <Toolbar>
+          <div className="d-flex justify-content-end mb-2">
             <div className={classes.flex}></div>
             <Button
               className={classes.add_btn}
@@ -177,7 +194,7 @@ class UserList extends React.Component {
             >
               Add
             </Button>
-          </Toolbar>
+          </div>
           <DataGrid
             rows={this.props.usersListData}
             columns={columns}

@@ -107,15 +107,27 @@ class RolesPage extends React.Component {
   render() {
     const { classes } = this.props;
     const columns = [
-      { field: "name", headerName: "Name", width: 250 },
-      { field: "isDeleted", headerName: "Is Deleted", width: 150 },
+      {
+        field: "name",
+        headerName: "Name",
+        width: 250,
+        sortable: true,
+        sortDirection: "asc",
+      },
+      {
+        field: "isDeleted",
+        headerName: "Is Deleted",
+        width: 150,
+        sortable: true,
+      },
       {
         field: "acction",
         headerName: "Actions",
         sortable: false,
+        align: "right",
         renderCell: (params) => {
           return (
-            <Toolbar>
+            <div className={classes.flex}>
               <Button
                 className="mr-2"
                 variant="contained"
@@ -131,7 +143,7 @@ class RolesPage extends React.Component {
               >
                 Delete
               </Button>
-            </Toolbar>
+            </div>
           );
         },
         flex: 1,
@@ -140,11 +152,12 @@ class RolesPage extends React.Component {
     return (
       <Container component="main">
         <div className="mb-5">
-          <Typography variant="h4" gutterBottom>
-            Roles
-          </Typography>
-          <Toolbar>
-            <div className={classes.flex}></div>
+          <div>
+            <Typography variant="h4" gutterBottom>
+              Roles
+            </Typography>
+          </div>
+          <div className="d-flex justify-content-end mb-2">
             <Button
               className={classes.add_btn}
               variant="contained"
@@ -153,7 +166,7 @@ class RolesPage extends React.Component {
             >
               Add
             </Button>
-          </Toolbar>
+          </div>
           <DataGrid
             rows={this.props.allRolesList}
             columns={columns}
@@ -177,7 +190,7 @@ class RolesPage extends React.Component {
             onHandleModel={(e) => this.onHandleModel("isOpenDeleteDialog")}
             isOpenDialog={this.state.isOpenDeleteDialog}
             action={(e) => this.deleteRole(this.state.selectedRole)}
-            title={"Delete User"}
+            title={"Delete Role"}
             content={"Are you sure want to delete ?"}
           />
         )}

@@ -111,15 +111,27 @@ class ClientsPage extends React.Component {
   render() {
     const { classes } = this.props;
     const columns = [
-      { field: "clientName_chr", headerName: "Client Name", width: 250 },
-      { field: "isDeleted_ysn", headerName: "Is Deleted", width: 150 },
+      {
+        field: "clientName_chr",
+        headerName: "Client Name",
+        width: 250,
+        sortable: true,
+        sortDirection: 'asc',
+      },
+      {
+        field: "isDeleted_ysn",
+        headerName: "Is Deleted",
+        width: 150,
+        sortable: true,
+      },
       {
         field: "acction",
         headerName: "Actions",
         sortable: false,
+        align: "right",
         renderCell: (params) => {
           return (
-            <Toolbar>
+            <div className={classes.flex}>
               <Button
                 className="mr-2"
                 variant="contained"
@@ -135,7 +147,7 @@ class ClientsPage extends React.Component {
               >
                 Delete
               </Button>
-            </Toolbar>
+            </div>
           );
         },
         flex: 1,
@@ -147,7 +159,7 @@ class ClientsPage extends React.Component {
           <Typography variant="h4" gutterBottom>
             Clients
           </Typography>
-          <Toolbar>
+          <div className="d-flex justify-content-end mb-2">
             <div className={classes.flex}></div>
             <Button
               className={classes.add_btn}
@@ -157,7 +169,7 @@ class ClientsPage extends React.Component {
             >
               Add
             </Button>
-          </Toolbar>
+          </div>
           <DataGrid
             rows={this.props.allClientsList}
             columns={columns}

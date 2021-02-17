@@ -13,6 +13,7 @@ import AppLayout from "./components/layout/AppLayout"
 import UserList from "./components/User/UserList";
 import RolesPage from "./components/Roles/RolesPage";
 import ClientsPage from "./components/Clients/ClientsPage";
+import ChangePassword from "./components/User/ChangePassword";
 
 function App(props) {
   return (
@@ -47,6 +48,11 @@ function App(props) {
             exact
             path="/clients"
             component={ClientsPage}
+          />
+           <ProtectedRoute
+            exact
+            path="/change-password"
+            component={ChangePassword}
           />
         </Switch>
         </AppLayout>

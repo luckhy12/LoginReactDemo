@@ -10,9 +10,7 @@ export const createClient = (data, callback, errorCallBack) => {
     })
       .then((response) => {
         // dispatch(toggleLoader(false));
-        if (response && response.data) {
-          callback && callback(response);
-        }
+        callback && callback(response && response.data);
       })
       .catch((error) => {
         errorCallBack && errorCallBack(error.response.data);
@@ -69,7 +67,12 @@ export const updateClient = (data, callback, errorCallBack) => {
 export const deleteClient = (data, callback, errorCallBack) => {
   return async (dispatch) => {
     serviceCallAuth({
-      url: "/api/Client/DeleteClient" + "?Calling_UserID_chr=" + data.userId+"&ClientID_lng="+data.id,
+      url:
+        "/api/Client/DeleteClient" +
+        "?Calling_UserID_chr=" +
+        data.userId +
+        "&ClientID_lng=" +
+        data.id,
       method: "delete",
       data: data,
     })

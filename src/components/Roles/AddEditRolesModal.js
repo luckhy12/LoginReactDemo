@@ -112,7 +112,7 @@ class AddEditUserModal extends React.Component {
           maxWidth={"md"}
         >
           <DialogTitle id="form-dialog-title">
-            {this.props.action === "add" ? "Add User" : "Edit User"}
+            {this.props.action === "add" ? "Add Role" : "Edit Role"}
           </DialogTitle>
           <form noValidate onSubmit={this.onSubmitForm}>
             <DialogContent>
@@ -126,7 +126,7 @@ class AddEditUserModal extends React.Component {
                       autoFocus
                       margin="dense"
                       id="name"
-                      label="User Name"
+                      label="Role Name"
                       fullWidth
                       name="name"
                       value={this.state.role_data.name}
