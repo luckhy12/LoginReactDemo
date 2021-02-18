@@ -153,6 +153,7 @@ class UserList extends React.Component {
         field: "acction",
         headerName: "Actions",
         sortable: false,
+        headerAlign: 'right',
         align: "right",
         renderCell: (params) => {
           return (

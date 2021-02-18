@@ -8,7 +8,7 @@ import Grid from "@material-ui/core/Grid";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import Container from "@material-ui/core/Container";
-import { forgotPassword } from "../../services/UserService";
+import { changePassword, logout } from "../../services/UserService";
 import { connect } from "react-redux";
 import { NotificationManager } from "react-notifications";
 import FormValidator from "../../validations/FormValidator";
@@ -39,26 +39,40 @@ class ChangePassword extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      email: "",
+      currentPassword: "",
+      newPassword: "",
+      confirmPassword: "",
     };
-    this.forgotPasswordFormValidator = new FormValidator();
+    this.changePasswordFormValidator = new FormValidator();
   }
 
-  onChangeEmail = (event) => {
-    const email = event.target.value;
-    this.setState({ email: email });
+  setFormValue = (event) => {
+    const value = event.target.value;
+    const name = event.target.name;
+    this.setState({ [name]: value });
   };
 
   onSubmitForm = (event) => {
     event.preventDefault();
-    if (this.forgotPasswordFormValidator.allValid()) {
+    const { userId } = this.props.profileData;
+    if (this.changePasswordFormValidator.allValid()) {
       let data = {
-        email: this.state.email,
+        currentPassword: this.state.currentPassword,
+        newPassword: this.state.newPassword,
+        confirmPassword: this.state.confirmPassword,
+        userId: userId,
       };
-      this.props.forgotPassword(
+      if (this.state.newPassword !== this.state.confirmPassword) {
+        NotificationManager.error(
+          "New password and Confirm Password does not match."
+        );
+        return false;
+      }
+      this.props.changePassword(
         data,
         (res) => {
-          this.props.history.push("/");
+          localStorage.clear();
+          this.props.logout();
           NotificationManager.success(res);
         },
         (err) => {
@@ -66,7 +80,7 @@ class ChangePassword extends React.Component {
         }
       );
     } else {
-      this.forgotPasswordFormValidator.showMessages();
+      this.changePasswordFormValidator.showMessages();
       this.forceUpdate();
     }
   };
@@ -95,16 +109,16 @@ class ChangePassword extends React.Component {
               label="Current Password"
               name="currentPassword"
               autoFocus
-              value={this.state.email}
-              onChange={this.onChangeEmail}
+              value={this.state.currentPassword}
+              onChange={this.setFormValue}
             />
-            {this.forgotPasswordFormValidator.message(
+            {this.changePasswordFormValidator.message(
               "Current Paasword",
-              this.state.email,
+              this.state.currentPassword,
               "required|password",
               "text-danger"
             )}
-             <TextField
+            <TextField
               variant="outlined"
               margin="normal"
               required
@@ -113,31 +127,31 @@ class ChangePassword extends React.Component {
               label="New Password"
               name="newPassword"
               autoFocus
-              value={this.state.email}
-              onChange={this.onChangeEmail}
+              value={this.state.newPassword}
+              onChange={this.setFormValue}
             />
-            {this.forgotPasswordFormValidator.message(
+            {this.changePasswordFormValidator.message(
               "New Password",
-              this.state.email,
+              this.state.newPassword,
               "required|password",
               "text-danger"
             )}
-             <TextField
+            <TextField
               variant="outlined"
               margin="normal"
               type="password"
               required
               fullWidth
               id="confirmPassword"
-              label="Current Password"
+              label="Confirmed Password"
               name="confirmPassword"
               autoFocus
-              value={this.state.email}
-              onChange={this.onChangeEmail}
+              value={this.state.confirmPassword}
+              onChange={this.setFormValue}
             />
-            {this.forgotPasswordFormValidator.message(
+            {this.changePasswordFormValidator.message(
               "Confirm Password",
-              this.state.email,
+              this.state.confirmPassword,
               "required|password",
               "text-danger"
             )}
@@ -158,11 +172,12 @@ class ChangePassword extends React.Component {
 }
 
 const mapDispatchToProps = {
-  forgotPassword,
+  changePassword,
+  logout,
 };
 const mapStateToProps = (state) => {
   return {
-    data: state.login,
+    profileData: state.login.loginData,
   };
 };
 export default withStyles(useStyles, { withTheme: true })(

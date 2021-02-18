@@ -35,7 +35,9 @@ class AddEditUserModal extends React.Component {
         calling_UserID_chr: this.props.data.userId,
         tblDefaultAvatar: "",
         isActive_ysn: true,
-        ClientID_lng: "",
+        ClientID_lng: this.props.data.userId,
+        lastUpdatedByUserID_chr: this.props.data.userId,
+        lastUpdatedDateTime_dtm: new Date(),
       },
       isLoading: false,
     };
@@ -50,7 +52,6 @@ class AddEditUserModal extends React.Component {
         role_data["clientName_chr"] = selectedRecord.clientName_chr;
         role_data["id"] = selectedRecord.id;
         role_data["securitystamp"] = "";
-        role_data["ClientID_lng"] = selectedRecord.id;
         return { role_data };
       });
     }

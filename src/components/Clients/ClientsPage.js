@@ -126,8 +126,9 @@ class ClientsPage extends React.Component {
       },
       {
         field: "acction",
-        headerName: "Actions",
+        headerName: 'Actions',
         sortable: false,
+        headerAlign: 'right',
         align: "right",
         renderCell: (params) => {
           return (
@@ -176,7 +177,9 @@ class ClientsPage extends React.Component {
             pageSize={10}
             disableColumnMenu={true}
             autoHeight={true}
-            id="clientID_ids"
+            // getRowId={(row)=>{
+            //   return  row.clientID_ids
+            // }}
           />
         </div>
         {this.state.isLoading && <Loader type="full-screen" />}

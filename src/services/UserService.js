@@ -156,3 +156,22 @@ export const deleteUser = (data, callback, errorCallBack) => {
       });
   };
 };
+
+export const changePassword = (data, callback, errorCallBack) => {
+  return async (dispatch) => {
+    serviceCallAuth({
+      url: "/api/Account/ChangePassword",
+      method: "post",
+      data: data,
+    })
+      .then((response) => {
+        // dispatch(toggleLoader(false));
+        if (response) {
+          callback && callback(response.data.message);
+        }
+      })
+      .catch((error) => {
+        errorCallBack && errorCallBack(error && error.response && error.response.data);
+      });
+  };
+};

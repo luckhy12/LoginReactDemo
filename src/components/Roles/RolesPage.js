@@ -125,6 +125,7 @@ class RolesPage extends React.Component {
         headerName: "Actions",
         sortable: false,
         align: "right",
+        headerAlign: 'right',
         renderCell: (params) => {
           return (
             <div className={classes.flex}>

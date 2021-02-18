@@ -29,9 +29,10 @@ export const getAllClientsList = (data, callback, errorCallBack) => {
         // dispatch(toggleLoader(false));
         if (response && response.data) {
           callback && callback(response.data.tblClient);
-          response.data.tblClient.forEach((element, index) => {
-            response.data.tblClient[index]["id"] = index + 1;
-          });
+          Array.isArray(response.data.tblClient) &&
+            response.data.tblClient.forEach((element, index) => {
+              response.data.tblClient[index]["id"] = index + 1;
+            });
           dispatch({
             data: response.data.tblClient,
             type: AppConstants.GET_ALL_CLIENTS,
@@ -70,9 +71,10 @@ export const deleteClient = (data, callback, errorCallBack) => {
       url:
         "/api/Client/DeleteClient" +
         "?Calling_UserID_chr=" +
-        data.userId +
+        data.calling_UserID_chr +
         "&ClientID_lng=" +
-        data.id,
+        data.clientID_ids +
+        "&is_Hard_Delete_ysn=false&Include_Deleted_Clients_byt=0",
       method: "delete",
       data: data,
     })
