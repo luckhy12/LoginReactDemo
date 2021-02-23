@@ -21,6 +21,7 @@ import PersonAddIcon from "@material-ui/icons/PersonAdd";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import SettingsIcon from "@material-ui/icons/Settings";
+import CallIcon from '@material-ui/icons/Call';
 
 // import { useHistory } from "react-router-dom";
 import DashboardIcon from "@material-ui/icons/Dashboard";
@@ -260,6 +261,20 @@ const MiniDrawer = function (props) {
                 <PersonAddIcon />
               </ListItemIcon>
               <ListItemText primary={"Clients"} />
+            </ListItem>
+          </Link>
+          <Link to="/voice-calls">
+            <ListItem
+              button
+              key={"Voice-call"}
+              onClick={(e) => setSelectedNav("Voice-call")}
+              selected={selectedNav === "Voice-call"}
+              title="Voice Calls"
+            >
+              <ListItemIcon>
+                <CallIcon />
+              </ListItemIcon>
+              <ListItemText primary={"Voice Call"} />
             </ListItem>
           </Link>
         </List>

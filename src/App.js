@@ -14,6 +14,7 @@ import UserList from "./components/User/UserList";
 import RolesPage from "./components/Roles/RolesPage";
 import ClientsPage from "./components/Clients/ClientsPage";
 import ChangePassword from "./components/User/ChangePassword";
+import VoiceCalls from "./components/VoiceCalls/VoiceCalls";
 
 function App(props) {
   return (
@@ -53,6 +54,11 @@ function App(props) {
             exact
             path="/change-password"
             component={ChangePassword}
+          />
+           <ProtectedRoute
+            exact
+            path="/voice-calls"
+            component={VoiceCalls}
           />
         </Switch>
         </AppLayout>
