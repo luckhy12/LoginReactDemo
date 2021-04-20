@@ -15,6 +15,11 @@ import RolesPage from "./components/Roles/RolesPage";
 import ClientsPage from "./components/Clients/ClientsPage";
 import ChangePassword from "./components/User/ChangePassword";
 import VoiceCalls from "./components/VoiceCalls/VoiceCalls";
+import EngagePage from "./components/Engage/Engage";
+import TemplatePage from "./components/Templates/TemplatePage";
+import CalendarPage from "./components/Calendar/CalendarPage";
+import ReportingPage from "./components/Reports/Reporting";
+import BillingPage from "./components/Bills/BillingPage";
 
 function App(props) {
   return (
@@ -34,6 +39,31 @@ function App(props) {
             exact
             path="/dashboard"
             component={Dashboard}
+          />
+          <ProtectedRoute
+            exact
+            path="/engage"
+            component={EngagePage}
+          />
+          <ProtectedRoute
+            exact
+            path="/template"
+            component={TemplatePage}
+          />
+          <ProtectedRoute
+            exact
+            path="/calendar"
+            component={CalendarPage}
+          />
+          <ProtectedRoute
+            exact
+            path="/reporting"
+            component={ReportingPage}
+          />
+          <ProtectedRoute
+            exact
+            path="/biling"
+            component={BillingPage}
           />
            <ProtectedRoute
             exact

@@ -18,6 +18,12 @@ import AssignmentIndIcon from "@material-ui/icons/AssignmentInd";
 import PersonIcon from "@material-ui/icons/Person";
 import Button from "@material-ui/core/Button";
 import PersonAddIcon from "@material-ui/icons/PersonAdd";
+import HomeIcon from '@material-ui/icons/Home';
+import PhoneInTalkIcon from '@material-ui/icons/PhoneInTalk';
+import DateRangeIcon from '@material-ui/icons/DateRange';
+import EqualizerIcon from '@material-ui/icons/Equalizer';
+import DescriptionOutlinedIcon from '@material-ui/icons/DescriptionOutlined';
+import PersonOutlineOutlinedIcon from '@material-ui/icons/PersonOutlineOutlined';
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import SettingsIcon from "@material-ui/icons/Settings";
@@ -34,8 +40,13 @@ import DashboardIcon from "@material-ui/icons/Dashboard";
 import { Link } from "react-router-dom";
 import { logout } from "../../services/UserService";
 import { connect } from "react-redux";
-import { BorderStyle } from "@material-ui/icons";
+import { BorderStyle, LineStyleRounded } from "@material-ui/icons";
 import { sortedLastIndex } from "lodash";
+import Collapse from '@material-ui/core/Collapse';
+
+import IconExpandLess from '@material-ui/icons/ExpandLess';
+import IconExpandMore from '@material-ui/icons/ExpandMore';
+import { LinearProgress } from "@material-ui/core";
 
 const drawerWidth = 240;
 
@@ -44,7 +55,7 @@ const useStyles = makeStyles((theme) => ({
     padding:"10px"
   },
   linkText: {    
-    color: '#7D86A9'
+    color: 'white'
   },
   root: {
     display: "flex",
@@ -79,7 +90,7 @@ const useStyles = makeStyles((theme) => ({
     whiteSpace: "nowrap",
   },
   drawerOpen: {    
-    background:"#0C1121",
+    background:  'linear-gradient(45deg, #0C1121 30%,  #C40B6C 90%)',
     width: drawerWidth,
     transition: theme.transitions.create("width", {
       easing: theme.transitions.easing.sharp,
@@ -87,7 +98,7 @@ const useStyles = makeStyles((theme) => ({
     }),
   },
   drawerClose: {        
-    background:"#0C1121",
+    background:  'linear-gradient(45deg, #0C1121 30%,  #C40B6C 90%)',
     transition: theme.transitions.create("width", {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
@@ -112,12 +123,16 @@ const useStyles = makeStyles((theme) => ({
   logout: {
     float: "right",
   },
+  active: {
+    background: "#117A8B !important"
+  }
 }));
 
 const MiniDrawer = function (props) {
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
+  const [adminOpen, setAdminOpen] = React.useState(false);
   const [selectedNav, setSelectedNav] = React.useState("Dashboard");
   const [anchorEl, setAnchorEl] = React.useState(null);
   const isOpenSettingmenu = Boolean(anchorEl);
@@ -143,7 +158,12 @@ const MiniDrawer = function (props) {
 
   const handleDrawerClose = () => {
     setOpen(false);
+    setAdminOpen(false);
   };
+
+  function handleAdminClick() {
+    setAdminOpen(!adminOpen)
+  }
 
   const { profileData } = props;
   return (
@@ -248,13 +268,106 @@ const MiniDrawer = function (props) {
               onClick={(e) => setSelectedNav("Dashboard")}
               selected={selectedNav === "Dashboard"}
               title="Dashboard" 
+              classes={{ selected: classes.active }}
             >
               <ListItemIcon>
-                <DashboardIcon className={classes.linkText }/>
+                <HomeIcon className={classes.linkText }/>
               </ListItemIcon>
               <ListItemText primary={"Dashboard"}  className={classes.linkText }/>
             </ListItem>
           </Link>
+          <Link to="/engage">
+            <ListItem
+              button
+              key={"Engage"}
+              onClick={(e) => setSelectedNav("Engage")}
+              selected={selectedNav === "Engage"}
+              title="Engage" 
+              classes={{ selected: classes.active }}
+            >
+              <ListItemIcon>
+                <PhoneInTalkIcon className={classes.linkText }/>
+              </ListItemIcon>
+              <ListItemText primary={"Engage"}  className={classes.linkText }/>
+            </ListItem>
+          </Link>
+          <Link to="/template">
+            <ListItem
+              button
+              key={"Templates"}
+              onClick={(e) => setSelectedNav("Templates")}
+              selected={selectedNav === "Templates"}
+              title="Templates" 
+              classes={{ selected: classes.active }}
+            >
+              <ListItemIcon>
+                <DashboardIcon className={classes.linkText }/>
+              </ListItemIcon>
+              <ListItemText primary={"Templates"}  className={classes.linkText }/>
+            </ListItem>
+          </Link>
+          <Link to="/calendar">
+            <ListItem
+              button
+              key={"Calendar"}
+              onClick={(e) => setSelectedNav("Calendar")}
+              selected={selectedNav === "Calendar"}
+              title="Calendar" 
+              classes={{ selected: classes.active }}
+            >
+              <ListItemIcon>
+                <DateRangeIcon className={classes.linkText }/>
+              </ListItemIcon>
+              <ListItemText primary={"Calendar"}  className={classes.linkText }/>
+            </ListItem>
+          </Link>
+          <Link to="/reporting">
+            <ListItem
+              button
+              key={"Reporting"}
+              onClick={(e) => setSelectedNav("Reporting")}
+              selected={selectedNav === "Reporting"}
+              title="Reporting" 
+              classes={{ selected: classes.active }}
+            >
+              <ListItemIcon>
+                <EqualizerIcon className={classes.linkText }/>
+              </ListItemIcon>
+              <ListItemText primary={"Reporting"}  className={classes.linkText }/>
+            </ListItem>
+          </Link>
+          <Link to="/biling">
+            <ListItem
+              button
+              key={"Biling"}
+              onClick={(e) => setSelectedNav("Biling")}
+              selected={selectedNav === "Biling"}
+              title="Biling" 
+              classes={{ selected: classes.active }}
+            >
+              <ListItemIcon>
+                <DescriptionOutlinedIcon className={classes.linkText }/>
+              </ListItemIcon>
+              <ListItemText primary={"Biling"}  className={classes.linkText }/>
+            </ListItem>
+          </Link>
+          <Link>
+            <ListItem
+              button
+              key={"Admin"}
+              onClick={handleAdminClick}
+              title="Admin" 
+            >
+              <ListItemIcon>
+                <PersonOutlineOutlinedIcon className={classes.linkText }/>
+              </ListItemIcon>
+              <ListItemText primary={"Admin"}  className={classes.linkText }/>
+              {adminOpen ? <IconExpandLess className={classes.linkText } /> : <IconExpandMore className={classes.linkText } />}
+            </ListItem>
+          </Link>
+          <Collapse in={adminOpen} timeout="auto" unmountOnExit>
+          <Divider />
+          <List component="div" disablePadding>
           <Link to="/user">
             <ListItem
               button
@@ -262,8 +375,9 @@ const MiniDrawer = function (props) {
               onClick={(e) => setSelectedNav("User")}
               selected={selectedNav === "User"}
               title="User"
+              classes={{ selected: classes.active }}
             >
-              <ListItemIcon>
+              <ListItemIcon style={{marginLeft:"50px"}}>
                 <PersonIcon className={classes.linkText }/>
               </ListItemIcon>
               <ListItemText primary={"User"} className={classes.linkText }/>
@@ -276,41 +390,32 @@ const MiniDrawer = function (props) {
               onClick={(e) => setSelectedNav("Roles")}
               selected={selectedNav === "Roles"}
               title="Roles"
+              classes={{ selected: classes.active }}
             >
-              <ListItemIcon>
+              <ListItemIcon style={{marginLeft:"50px"}}>
                 <AssignmentIndIcon className={classes.linkText }/>
               </ListItemIcon>
               <ListItemText primary={"Roles"} className={classes.linkText }/>
             </ListItem>
           </Link>
-          <Link to="/clients">
+          <Link to="/clients"> 
             <ListItem
               button
               key={"Clients"}
               onClick={(e) => setSelectedNav("Clients")}
               selected={selectedNav === "Clients"}
               title="Clients"
+              classes={{ selected: classes.active }}
             >
-              <ListItemIcon>
+              <ListItemIcon style={{marginLeft:"50px"}}>
                 <PersonAddIcon className={classes.linkText }/>
               </ListItemIcon>
               <ListItemText primary={"Clients"} className={classes.linkText }/>
             </ListItem>
           </Link>
-          <Link to="/voice-calls">
-            <ListItem
-              button
-              key={"Voice-call"}
-              onClick={(e) => setSelectedNav("Voice-call")}
-              selected={selectedNav === "Voice-call"}
-              title="Voice Calls"
-            >
-              <ListItemIcon>
-                <CallIcon className={classes.linkText }/>
-              </ListItemIcon>
-              <ListItemText primary={"Voice Call"} className={classes.linkText }/>
-            </ListItem>
-          </Link>
+          </List>
+         </Collapse>
+          
         </List>
       </Drawer>
     </div>
