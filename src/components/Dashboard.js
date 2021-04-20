@@ -10,10 +10,17 @@ import Avatar from '@material-ui/core/Avatar';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
+import Chip from '@material-ui/core/Chip';
 
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
+  outerTitleIcons:{
+width:15,
+height:15,
+marginBottom:3,
+marginLeft:5
+  },
   root: {
     flexGrow: 1,
     padding:15
@@ -107,79 +114,116 @@ export default function MiniDrawer() {
       <Grid item xs={4}>
         <Paper className={classes.paper}><Typography component="div">
         <Box fontWeight="fontWeightBold" m={1} textAlign="left" color="black">
-        Today's Task
-      </Box>
+        Today's Task <img src="Task.png" className={classes.outerTitleIcons}/>
+      </Box> 
     </Typography>
-        <div className={classes.innerroot}>
-        <Paper className={classes.innerpaper}>
-        <Grid container wrap="nowrap" spacing={4}>
-          <Grid item>
-            <Avatar>W</Avatar>
-          </Grid>
-          <Grid item xs zeroMinWidth>
-            <Typography noWrap>Maureen Biologist</Typography>
-          </Grid>
-        </Grid>
-      </Paper>
-      <Paper className={classes.innerpaper}>
-        <Grid container wrap="nowrap" spacing={2}>
-          <Grid item>
-            <Avatar>W</Avatar>
-          </Grid>
-          <Grid item xs>
-            <Typography noWrap>Mark Ego</Typography>
-          </Grid>
-        </Grid>
-      </Paper>
-      <Paper className={classes.innerpaper}>
-        <Grid container wrap="nowrap" spacing={2}>
-          <Grid item>
-            <Avatar>W</Avatar>
-          </Grid>
-          <Grid item xs>
-            <Typography>John Doe</Typography>
-          </Grid>
-        </Grid>
-      </Paper></div>
+        
+    <div className={classes.innerroot}>
+     
+     <Grid container wrap="nowrap">
+       <Grid item xs={12}>
+       <Card className={classes.innerpaper}>
+   <CardHeader
+     avatar={
+       <Avatar aria-label="recipe" className={classes.avatar}>
+         R
+       </Avatar>
+     }    style={{ textAlign: 'left' }}      
+     title="Maureen Biologist"
+     action={
+      <Chip
+    size="small"
+    label="1:30 pm"
+    color="#27F190"
+  />
+    }
+     subheader="Call, 2nd Try"
+   />     
+  
+ </Card>
+       </Grid>
+      
+     </Grid>
+ 
+   
+   </div>
+
+        <Card className={classes.innerpaper}>
+      <CardHeader
+        avatar={
+          <Avatar aria-label="recipe" className={classes.avatar}>
+            R
+          </Avatar>
+        } style={{ textAlign: 'left' }}   
+        action={
+          <Chip
+        size="small"
+        label="Anytime"
+        color="secondary"
+      />
+        }
+        title="Maureen Biologist"
+        subheader="Call, 2nd Try"
+      /></Card>
+    
+      
         {/* --------- */}
         </Paper>
       </Grid>
       <Grid item xs={4}>
         <Paper className={classes.paper}>  <Typography component="div">
         <Box fontWeight="fontWeightBold" m={1} textAlign="left" color="black">
-        This week stats
-      </Box>
+        This week stats <img src="Vector.png" className={classes.outerTitleIcons}/>
+      </Box> 
     </Typography>
         {/* -----------------Inner Content Cell 2 --------------- */}
         <div className={classes.innerroot}>
         <Paper className={classes.innerpaper}>
-        <Grid container wrap="nowrap" spacing={4}>
-          <Grid item>
-            <Avatar>W</Avatar>
-          </Grid>
-          <Grid item xs zeroMinWidth>
-            <Typography noWrap>Maureen Biologist</Typography>
-          </Grid>
+        <Grid container spacing={3}>
+        <Grid item xs={4}>
+        <Typography align="left" variant="subtitle2">Calls Made</Typography>
+          <Typography align="left" variant="subtitle2" color="textSecondary">50</Typography>
+        </Grid>
+        <Grid item xs={4}>
+        <Typography align="left" variant="subtitle2">Reached</Typography>
+          <Typography align="left" variant="subtitle2" color="textSecondary">50</Typography>
+        </Grid>
+        <Grid item xs={4}>
+        <Typography align="left" variant="subtitle2">Won</Typography>
+          <Typography align="left" variant="subtitle2" color="textSecondary">50</Typography>
+        </Grid>
         </Grid>
       </Paper>
       <Paper className={classes.innerpaper}>
-        <Grid container wrap="nowrap" spacing={2}>
-          <Grid item>
-            <Avatar>W</Avatar>
-          </Grid>
-          <Grid item xs>
-            <Typography noWrap>Mark Ego</Typography>
-          </Grid>
+      <Grid container spacing={3}>
+        <Grid item xs={4}>
+        <Typography align="left" variant="subtitle2">Calls Made</Typography>
+          <Typography align="left" variant="subtitle2" color="textSecondary">50</Typography>
+        </Grid>
+        <Grid item xs={4}>
+        <Typography align="left" variant="subtitle2">Reached</Typography>
+          <Typography align="left" variant="subtitle2" color="textSecondary">50</Typography>
+        </Grid>
+        <Grid item xs={4}>
+        <Typography align="left" variant="subtitle2">Won</Typography>
+          <Typography align="left" variant="subtitle2" color="textSecondary">50</Typography>
+        </Grid>
         </Grid>
       </Paper>
       <Paper className={classes.innerpaper}>
-        <Grid container wrap="nowrap" spacing={2}>
-          <Grid item>
-            <Avatar>W</Avatar>
-          </Grid>
-          <Grid item xs>
-            <Typography>John Doe</Typography>
-          </Grid>
+      <Grid container spacing={3}>
+        <Grid item xs={4}>
+        <Typography align="left" variant="subtitle2">Calls Made</Typography>
+          <Typography align="left" variant="subtitle2" color="textSecondary">50</Typography>
+        </Grid>
+        <Grid item xs={4}>
+        <Typography align="left" variant="subtitle2">Reached</Typography>
+          <Typography align="left" variant="subtitle2" color="textSecondary">50</Typography>
+        </Grid>
+        <Grid item xs={4}>
+        <Typography align="left" variant="subtitle2">Won</Typography>
+          <Typography align="left" variant="subtitle2" color="textSecondary">50</Typography>
+        </Grid>
         </Grid>
       </Paper></div>
       {/* ------------------------------------------ */}
@@ -189,13 +233,8 @@ export default function MiniDrawer() {
         <Paper className={classes.paper}>
         <Typography component="div">
         <Box fontWeight="fontWeightBold" m={1} textAlign="left" color="black">
-        Live Feed
-      </Box> <div>
-        <Box backgroundColor="#F6B44F">  
-      hello
-      <img src="LiveFeed.png"/>
-</Box>
-      </div>
+        Live Feed <img src="LiveFeed.png" className={classes.outerTitleIcons}/>
+      </Box> 
       
     </Typography>
           {/* -----------------Inner Content Cell 3 --------------- */}
