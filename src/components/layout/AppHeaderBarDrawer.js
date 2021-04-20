@@ -22,20 +22,36 @@ import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import SettingsIcon from "@material-ui/icons/Settings";
 import CallIcon from '@material-ui/icons/Call';
+import Typography from '@material-ui/core/Typography';
+import Badge from '@material-ui/core/Badge';
+import NotificationsIcon from '@material-ui/icons/Notifications';
+import LinkIcon from '@material-ui/icons/Link';
+import Box from '@material-ui/core/Box';
+import Avatar from '@material-ui/core/Avatar';
 
 // import { useHistory } from "react-router-dom";
 import DashboardIcon from "@material-ui/icons/Dashboard";
 import { Link } from "react-router-dom";
 import { logout } from "../../services/UserService";
 import { connect } from "react-redux";
+import { BorderStyle } from "@material-ui/icons";
+import { sortedLastIndex } from "lodash";
 
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
+  appBarDivs:{
+    padding:"10px"
+  },
+  linkText: {    
+    color: '#7D86A9'
+  },
   root: {
     display: "flex",
   },
   appBar: {
+    backgroundColor:"#fff",
+    color:"#9BA3B9",
     zIndex: theme.zIndex.drawer + 1,
     transition: theme.transitions.create(["width", "margin"], {
       easing: theme.transitions.easing.sharp,
@@ -52,6 +68,7 @@ const useStyles = makeStyles((theme) => ({
   },
   menuButton: {
     marginRight: 36,
+    color: '#7D86A9'
   },
   hide: {
     display: "none",
@@ -61,14 +78,16 @@ const useStyles = makeStyles((theme) => ({
     flexShrink: 0,
     whiteSpace: "nowrap",
   },
-  drawerOpen: {
+  drawerOpen: {    
+    background:"#0C1121",
     width: drawerWidth,
     transition: theme.transitions.create("width", {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen,
     }),
   },
-  drawerClose: {
+  drawerClose: {        
+    background:"#0C1121",
     transition: theme.transitions.create("width", {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
@@ -79,11 +98,11 @@ const useStyles = makeStyles((theme) => ({
       width: theme.spacing(9) + 1,
     },
   },
-  toolbar: {
+  toolbar: {    
     display: "flex",
     alignItems: "center",
     justifyContent: "flex-end",
-    padding: theme.spacing(0, 1),
+    padding: theme.spacing(0, 1),    
     // necessary for content to be below app bar
     ...theme.mixins.toolbar,
   },
@@ -102,6 +121,7 @@ const MiniDrawer = function (props) {
   const [selectedNav, setSelectedNav] = React.useState("Dashboard");
   const [anchorEl, setAnchorEl] = React.useState(null);
   const isOpenSettingmenu = Boolean(anchorEl);
+
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -136,6 +156,7 @@ const MiniDrawer = function (props) {
         })}
       >
         <Toolbar>
+       
           <IconButton
             color="inherit"
             aria-label="open drawer"
@@ -148,9 +169,18 @@ const MiniDrawer = function (props) {
             <MenuIcon />
           </IconButton>
           <div className={classes.title}></div>
-          <div>
-            Welcome {profileData.firstName} {profileData.lastName}
-          </div>
+          <Box borderRight={1} className={classes.appBarDivs}><IconButton aria-label="show 17 new notifications" color="inherit">              
+                <LinkIcon />
+            </IconButton> Quick Links </Box>
+            <Box borderRight={1} className={classes.appBarDivs}><IconButton aria-label="show 17 new notifications" color="inherit">
+              <Badge badgeContent={17} color="secondary">
+                <NotificationsIcon />
+              </Badge>
+            </IconButton> Notifications </Box>
+            <Box display="flex" className={classes.appBarDivs}>
+            <Avatar src="Oval.png" />
+            <div style={{padding:'10px'}}>Hello {profileData.firstName} {profileData.lastName}</div>
+          </Box>
           <div>
             <IconButton
               aria-label="more"
@@ -158,7 +188,7 @@ const MiniDrawer = function (props) {
               aria-haspopup="true"
               onClick={handleClick}
             >
-              <SettingsIcon />
+              <SettingsIcon className={classes.linkText}/>
             </IconButton>
             <Menu
               id="long-menu"
@@ -197,11 +227,15 @@ const MiniDrawer = function (props) {
         }}
       >
         <div className={classes.toolbar}>
+          <img src="Logo.png"/>
+          <Typography variant="h6" component="h6" gutterBottom style={{color:"#fff",padding:"20px",marginTop:"15px"}}>
+        DialSight
+      </Typography>
           <IconButton onClick={handleDrawerClose}>
             {theme.direction === "rtl" ? (
-              <ChevronRightIcon />
+              <ChevronRightIcon className={classes.linkText}/>
             ) : (
-              <ChevronLeftIcon />
+              <ChevronLeftIcon className={classes.linkText}/>
             )}
           </IconButton>
         </div>
@@ -213,12 +247,12 @@ const MiniDrawer = function (props) {
               key={"Dashboard"}
               onClick={(e) => setSelectedNav("Dashboard")}
               selected={selectedNav === "Dashboard"}
-              title="Dashboard"
+              title="Dashboard" 
             >
               <ListItemIcon>
-                <DashboardIcon />
+                <DashboardIcon className={classes.linkText }/>
               </ListItemIcon>
-              <ListItemText primary={"Dashbaord"} />
+              <ListItemText primary={"Dashboard"}  className={classes.linkText }/>
             </ListItem>
           </Link>
           <Link to="/user">
@@ -230,9 +264,9 @@ const MiniDrawer = function (props) {
               title="User"
             >
               <ListItemIcon>
-                <PersonIcon />
+                <PersonIcon className={classes.linkText }/>
               </ListItemIcon>
-              <ListItemText primary={"User"} />
+              <ListItemText primary={"User"} className={classes.linkText }/>
             </ListItem>
           </Link>
           <Link to="/roles">
@@ -244,9 +278,9 @@ const MiniDrawer = function (props) {
               title="Roles"
             >
               <ListItemIcon>
-                <AssignmentIndIcon />
+                <AssignmentIndIcon className={classes.linkText }/>
               </ListItemIcon>
-              <ListItemText primary={"Roles"} />
+              <ListItemText primary={"Roles"} className={classes.linkText }/>
             </ListItem>
           </Link>
           <Link to="/clients">
@@ -258,9 +292,9 @@ const MiniDrawer = function (props) {
               title="Clients"
             >
               <ListItemIcon>
-                <PersonAddIcon />
+                <PersonAddIcon className={classes.linkText }/>
               </ListItemIcon>
-              <ListItemText primary={"Clients"} />
+              <ListItemText primary={"Clients"} className={classes.linkText }/>
             </ListItem>
           </Link>
           <Link to="/voice-calls">
@@ -272,9 +306,9 @@ const MiniDrawer = function (props) {
               title="Voice Calls"
             >
               <ListItemIcon>
-                <CallIcon />
+                <CallIcon className={classes.linkText }/>
               </ListItemIcon>
-              <ListItemText primary={"Voice Call"} />
+              <ListItemText primary={"Voice Call"} className={classes.linkText }/>
             </ListItem>
           </Link>
         </List>
