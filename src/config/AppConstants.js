@@ -4,5 +4,6 @@ const constants = {
   UNAUTH_USER: "UNAUTH_USER",
   GET_ALL_ROLES: "GET_ALL_ROLES",
   GET_ALL_CLIENTS: "GET_ALL_CLIENTS",
+  GET_ALL_TEMPLATES: "GET_ALL_TEMPLATES",
 };
 export default constants;

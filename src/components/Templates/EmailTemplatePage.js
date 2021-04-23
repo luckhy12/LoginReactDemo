@@ -1,18 +1,18 @@
 import React from "react";
 import { DataGrid } from "@material-ui/data-grid";
 import { withStyles } from "@material-ui/core/styles";
-import {
-  getAllClientsList,
-  deleteClient,
-} from "../../services/clients/ClientsService";
+import { getAllTemplatesList, deleteTemplate } from "../../services/Template/TemplateService";
 import { connect } from "react-redux";
 import { NotificationManager } from "react-notifications";
 import Container from "@material-ui/core/Container";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
-import AddEditClientsModal from "./AddEditClientsModal";
+import AddEditTemplateModal from "./AddEditTemplateModal";
 import ConfirmationDialog from "../utility/ConfirmationDialog";
 import Loader from "../utility/Loader";
+import IconButton from '@material-ui/core/IconButton';
+import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined';
+import CreateOutlinedIcon from '@material-ui/icons/CreateOutlined';
 
 const styles = (theme) => ({
   paper: {
@@ -29,9 +29,16 @@ const styles = (theme) => ({
   },
 });
 
-class ClientsPage extends React.Component {
+class EmailTemplatePage extends React.Component {
   state = {
-    selectedRecord: {},
+    reg_data: {
+      templateId_Ids: 1,
+      templateName_chr: "",
+      subject_chr: "",
+      body_chr: "",
+      type_lng: 1
+    },
+    selectedTemplate: {},
     isOpenDialog: false,
     isOpenDeleteDialog: false,
     action: "add",
@@ -47,11 +54,13 @@ class ClientsPage extends React.Component {
     const { userId } = this.props.profileData;
     let data = {
       Calling_UserID_chr: userId,
+      UserID_chr: userId,
+      Type_lng: 1,
       Return_All_Rows_ysn: true,
       Page_Index_int: 1,
       Page_Size_int: 100,
     };
-    await this.props.getAllClientsList(data);
+    await this.props.getAllTemplatesList(data);
   };
 
   handleChange = async (e) => {
@@ -79,7 +88,7 @@ class ClientsPage extends React.Component {
   };
 
   onClickEdit = async (row) => {
-    await this.setState({ selectedRecord: row });
+    await this.setState({ selectedTemplate: row });
     await this.setState((prevState) => {
       const isOpenDialog = !prevState.isOpenDialog;
       const action = "edit";
@@ -88,15 +97,14 @@ class ClientsPage extends React.Component {
   };
 
   onClickDelete = async (row) => {
-    await this.setState({ selectedRecord: row });
+    await this.setState({ selectedTemplate: row });
     await this.onHandleModel("isOpenDeleteDialog");
   };
 
-  deleteClient = async () => {
-    const { selectedRecord } = this.state;
-    selectedRecord["calling_UserID_chr"] = this.props.profileData.userId;
-    this.props.deleteClient(
-      selectedRecord,
+  deleteTemplate = async () => {
+    const { selectedTemplate } = this.state;
+    this.props.deleteTemplate(
+      selectedTemplate,
       (res) => {
         NotificationManager.success(res);
         this.reloadList();
@@ -111,42 +119,41 @@ class ClientsPage extends React.Component {
     const { classes } = this.props;
     const columns = [
       {
-        field: "clientName_chr",
-        headerName: "Client Name",
-        width: 250,
+        field: "templateName_chr",
+        headerName: "Email Template Name",
+        width: 350,
+        sortDirection: "asc",
         sortable: true,
-        sortDirection: 'asc',
       },
       {
-        field: "isDeleted_ysn",
-        headerName: "Is Deleted",
-        width: 150,
+        field: "subject_chr",
+        headerName: "Email Template Subject",
+        sortable: true,
+        width: 350,
+      },
+      {
+        field: "body_chr",
+        headerName: "Body",
+        width: 350,
         sortable: true,
       },
       {
         field: "acction",
-        headerName: 'Actions',
+        headerName: "Actions",
         sortable: false,
         headerAlign: 'right',
         align: "right",
         renderCell: (params) => {
           return (
             <div className={classes.flex}>
-              <Button
-                className="mr-2"
-                variant="contained"
-                onClick={(e) => this.onClickEdit(params.row)}
-                color="primary"
-              >
-                Edit
-              </Button>
-              <Button
-                onClick={(e) => this.onClickDelete(params.row)}
-                variant="contained"
-                color="primary"
-              >
-                Delete
-              </Button>
+               <IconButton aria-label="delete" onClick={(e) => this.onClickEdit(params.row)}>
+                <CreateOutlinedIcon 
+                color="primary"/>
+              </IconButton>
+              <IconButton aria-label="delete" onClick={(e) => this.onClickDelete(params.row)}>
+                <DeleteOutlinedIcon 
+                color="primary"/>
+              </IconButton>
             </div>
           );
         },
@@ -157,7 +164,7 @@ class ClientsPage extends React.Component {
       <Container component="main">
         <div className="mb-5">
           <Typography variant="h4" gutterBottom>
-            Clients
+            Email
           </Typography>
           <div className="d-flex justify-content-end mb-2">
             <div className={classes.flex}></div>
@@ -171,32 +178,36 @@ class ClientsPage extends React.Component {
             </Button>
           </div>
           <DataGrid
-            rows={this.props.allClientsList}
-            columns={columns}
+            rows={this.props.templatesListData}
+            columns={columns.map((column) => ({
+              ...column,
+              disableClickEventBubbling: true,
+            }))}
             pageSize={10}
             disableColumnMenu={true}
             autoHeight={true}
-            // getRowId={(row)=>{
-            //   return  row.clientID_ids
-            // }}
+            autoPageSize={true}
+            checkboxSelection ={true}
+            rowsPerPageOptions= {[10,25, 50, 100]}
+            Toolbar
           />
         </div>
         {this.state.isLoading && <Loader type="full-screen" />}
         {this.state.isOpenDialog && (
-          <AddEditClientsModal
+          <AddEditTemplateModal
             onClickAdd={this.onClickAdd}
             isOpenDialog={this.state.isOpenDialog}
             action={this.state.action}
             reloadList={this.reloadList}
-            selectedRecord={this.state.selectedRecord}
+            selectedTemplate={this.state.selectedTemplate}
           />
         )}
         {this.state.isOpenDeleteDialog && (
           <ConfirmationDialog
             onHandleModel={(e) => this.onHandleModel("isOpenDeleteDialog")}
             isOpenDialog={this.state.isOpenDeleteDialog}
-            action={(e) => this.deleteClient(this.state.selectedRecord)}
-            title={"Delete Client"}
+            action={(e) => this.deleteTemplate(this.state.selectedTemplate)}
+            title={"Delete Template"}
             content={"Are you sure want to delete ?"}
           />
         )}
@@ -206,15 +217,15 @@ class ClientsPage extends React.Component {
 }
 
 const mapDispatchToProps = {
-  getAllClientsList,
-  deleteClient,
+  getAllTemplatesList,
+  deleteTemplate,
 };
 const mapStateToProps = (state) => {
   return {
-    allClientsList: state.clients.allClientsList,
+    templatesListData: state.template.templatesListData,
     profileData: state.login.loginData,
   };
 };
 export default withStyles(styles, { withTheme: true })(
-  connect(mapStateToProps, mapDispatchToProps)(ClientsPage)
+  connect(mapStateToProps, mapDispatchToProps)(EmailTemplatePage)
 );

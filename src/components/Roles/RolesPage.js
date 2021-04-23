@@ -5,7 +5,6 @@ import { getAllRolesList, deleteRole } from "../../services/roles/RolesService";
 import { connect } from "react-redux";
 import { NotificationManager } from "react-notifications";
 import Container from "@material-ui/core/Container";
-import Toolbar from "@material-ui/core/Toolbar";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import AddEditRolesModal from "./AddEditRolesModal";

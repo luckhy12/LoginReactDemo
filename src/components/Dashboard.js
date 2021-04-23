@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(0, 3),
   },
   innerpaper: {
-    minWidth:275,
+    minWidth: 275,
     margin: `${theme.spacing(1)}px auto`,
     padding: theme.spacing(2),
     backgroundColor: "#F4F2FF",
@@ -88,16 +88,13 @@ export default function MiniDrawer() {
 
   return (
     <div className={classes.root}>
-      <Grid container spacing={3} >
-        <Grid item 
-            xs={12}
-            >
+      <Grid container spacing={3}>
+        <Grid item xs={12}>
           <Typography variant="h5" component="h5" gutterBottom>
             Dashboard Overview
           </Typography>
         </Grid>
-        <Grid item 
-            xs={12}>
+        <Grid item xs={12}>
           <div className={classes.search}>
             <Box display="flex" justifyContent="flex-end">
               <div className={classes.searchIcon}>
@@ -115,10 +112,7 @@ export default function MiniDrawer() {
           </div>
         </Grid>
 
-        <Grid item lg={4}
-            sm={6}
-            xl={4}
-            xs={12}>
+        <Grid item lg={4} sm={6} xl={4} xs={12}>
           <Paper className={classes.paper}>
             <Typography component="div">
               <Box
@@ -132,21 +126,19 @@ export default function MiniDrawer() {
               </Box>
             </Typography>
 
-                  <Card className={classes.innerpaper}>
-                    <CardHeader
-                      avatar={
-                        <Avatar aria-label="recipe" className={classes.avatar}>
-                          R
-                        </Avatar>
-                      }
-                      style={{ textAlign: "left" }}
-                      title="Maureen Biologist"
-                      action={
-                        <Chip size="small" label="1:30 pm" color="#27F190" />
-                      }
-                      subheader="Call, 2nd Try"
-                    />
-                  </Card>
+            <Card className={classes.innerpaper}>
+              <CardHeader
+                avatar={
+                  <Avatar aria-label="recipe" className={classes.avatar}>
+                    R
+                  </Avatar>
+                }
+                style={{ textAlign: "left" }}
+                title="Maureen Biologist"
+                action={<Chip size="small" label="1:30 pm" color="#27F190" />}
+                subheader="Call, 2nd Try"
+              />
+            </Card>
             <Card className={classes.innerpaper}>
               <CardHeader
                 avatar={
@@ -164,10 +156,7 @@ export default function MiniDrawer() {
             {/* --------- */}
           </Paper>
         </Grid>
-        <Grid item lg={4}
-            sm={6}
-            xl={4}
-            xs={12}>
+        <Grid item lg={4} sm={6} xl={4} xs={12}>
           <Paper className={classes.paper}>
             {" "}
             <Typography component="div">
@@ -182,117 +171,130 @@ export default function MiniDrawer() {
               </Box>
             </Typography>
             {/* -----------------Inner Content Cell 2 --------------- */}
-
-                  <Card className={classes.innerpaper}>
-                    <Typography align="left" variant="subtitle2">
-                      Calls Made
-                    </Typography>
-                    <Typography
-                      align="left"
-                      variant="subtitle2"
-                      color="textSecondary"
-                    >
-                      50
-                    </Typography>
-                
-                    <Typography align="left" variant="subtitle2">
-                      Reached
-                    </Typography>
-                    <Typography
-                      align="left"
-                      variant="subtitle2"
-                      color="textSecondary"
-                    >
-                      50
-                    </Typography>
-                 
-                    <Typography align="left" variant="subtitle2">
-                      Won
-                    </Typography>
-                    <Typography
-                      align="left"
-                      variant="subtitle2"
-                      color="textSecondary"
-                    >
-                      50
-                    </Typography>
-                  </Card>
-
-                  <Card className={classes.innerpaper}>
-                    <Typography align="left" variant="subtitle2">
-                      Calls Made
-                    </Typography>
-                    <Typography
-                      align="left"
-                      variant="subtitle2"
-                      color="textSecondary"
-                    >
-                      50
-                    </Typography>
-                    <Typography align="left" variant="subtitle2">
-                      Reached
-                    </Typography>
-                    <Typography
-                      align="left"
-                      variant="subtitle2"
-                      color="textSecondary"
-                    >
-                      50
-                    </Typography>
-                 
-                    <Typography align="left" variant="subtitle2">
-                      Won
-                    </Typography>
-                    <Typography
-                      align="left"
-                      variant="subtitle2"
-                      color="textSecondary"
-                    >
-                      50
-                    </Typography>
-                  </Card>
-
-                  <Card className={classes.innerpaper}>
-                    <Typography align="left" variant="subtitle2">
-                      Calls Made
-                    </Typography>
-                    <Typography
-                      align="left"
-                      variant="subtitle2"
-                      color="textSecondary"
-                    >
-                      50
-                    </Typography>
-                 
-                    <Typography align="left" variant="subtitle2">
-                      Reached
-                    </Typography>
-                    <Typography
-                      align="left"
-                      variant="subtitle2"
-                      color="textSecondary"
-                    >
-                      50
-                    </Typography>
-                    <Typography align="left" variant="subtitle2">
-                      Won
-                    </Typography>
-                    <Typography
-                      align="left"
-                      variant="subtitle2"
-                      color="textSecondary"
-                    >
-                      50
-                    </Typography>
-                  </Card>
-
+            <Card className={classes.innerpaper}>
+              <Grid container spacing={3}>
+                <Grid item lg={4} sm={6} xl={4} xs={12}>
+                  <Typography align="left" variant="subtitle2">
+                    Calls Made
+                  </Typography>
+                  <Typography
+                    align="left"
+                    variant="subtitle2"
+                    color="textSecondary"
+                  >
+                    50
+                  </Typography>
+                </Grid>
+                <Grid item lg={4} sm={6} xl={4} xs={12}>
+                  <Typography align="left" variant="subtitle2">
+                    Reached
+                  </Typography>
+                  <Typography
+                    align="left"
+                    variant="subtitle2"
+                    color="textSecondary"
+                  >
+                    50
+                  </Typography>
+                </Grid>
+                <Grid item lg={4} sm={6} xl={4} xs={12}>
+                  <Typography align="left" variant="subtitle2">
+                    Won
+                  </Typography>
+                  <Typography
+                    align="left"
+                    variant="subtitle2"
+                    color="textSecondary"
+                  >
+                    50
+                  </Typography>
+                </Grid>
+              </Grid>
+            </Card>
+            <Card className={classes.innerpaper}>
+              <Grid container spacing={3}>
+                <Grid item lg={4} sm={6} xl={4} xs={12}>
+                  <Typography align="left" variant="subtitle2">
+                    Calls Made
+                  </Typography>
+                  <Typography
+                    align="left"
+                    variant="subtitle2"
+                    color="textSecondary"
+                  >
+                    50
+                  </Typography>
+                </Grid>
+                <Grid item lg={4} sm={6} xl={4} xs={12}>
+                  <Typography align="left" variant="subtitle2">
+                    Reached
+                  </Typography>
+                  <Typography
+                    align="left"
+                    variant="subtitle2"
+                    color="textSecondary"
+                  >
+                    50
+                  </Typography>
+                </Grid>
+                <Grid item lg={4} sm={6} xl={4} xs={12}>
+                  <Typography align="left" variant="subtitle2">
+                    Won
+                  </Typography>
+                  <Typography
+                    align="left"
+                    variant="subtitle2"
+                    color="textSecondary"
+                  >
+                    50
+                  </Typography>
+                </Grid>
+              </Grid>
+            </Card>
+            <Card className={classes.innerpaper}>
+              <Grid container spacing={3}>
+                <Grid item lg={4} sm={6} xl={4} xs={12}>
+                  <Typography align="left" variant="subtitle2">
+                    Calls Made
+                  </Typography>
+                  <Typography
+                    align="left"
+                    variant="subtitle2"
+                    color="textSecondary"
+                  >
+                    50
+                  </Typography>
+                </Grid>
+                <Grid item lg={4} sm={6} xl={4} xs={12}>
+                  <Typography align="left" variant="subtitle2">
+                    Reached
+                  </Typography>
+                  <Typography
+                    align="left"
+                    variant="subtitle2"
+                    color="textSecondary"
+                  >
+                    50
+                  </Typography>
+                </Grid>
+                <Grid item lg={4} sm={6} xl={4} xs={12}>
+                  <Typography align="left" variant="subtitle2">
+                    Won
+                  </Typography>
+                  <Typography
+                    align="left"
+                    variant="subtitle2"
+                    color="textSecondary"
+                  >
+                    50
+                  </Typography>
+                </Grid>
+              </Grid>
+            </Card>
             {/* ------------------------------------------ */}
           </Paper>
         </Grid>
-        <Grid item lg={4}
-            sm={6}
-            xl={4}
-            xs={12}>
+        <Grid item lg={4} sm={6} xl={4} xs={12}>
           <Paper className={classes.paper}>
             <Typography component="div">
               <Box
@@ -307,54 +309,45 @@ export default function MiniDrawer() {
             </Typography>
             {/* -----------------Inner Content Cell 3 --------------- */}
 
-                  <Card className={classes.innerpaper}>
-                    <CardHeader
-                      avatar={
-                        <Avatar aria-label="recipe" className={classes.avatar}>
-                          JD
-                        </Avatar>
-                      }
-                      style={{ textAlign: "left" }}
-                      title="John Doe"
-                      subheader="Just Now"
-                    />
-                    <CardContent>
-                      <Typography
-                        variant="body2"
-                        color="textSecondary"
-                        component="p"
-                      >
-                        This impressive paella is a perfect party dish and a fun
-                        meal to cook together with your guests. Add 1 cup of
-                        frozen peas along with the mussels, if you like.
-                      </Typography>
-                    </CardContent>
-                  </Card>
+            <Card className={classes.innerpaper}>
+              <CardHeader
+                avatar={
+                  <Avatar aria-label="recipe" className={classes.avatar}>
+                    JD
+                  </Avatar>
+                }
+                style={{ textAlign: "left" }}
+                title="John Doe"
+                subheader="Just Now"
+              />
+              <CardContent>
+                <Typography variant="body2" color="textSecondary" component="p">
+                  This impressive paella is a perfect party dish and a fun meal
+                  to cook together with your guests. Add 1 cup of frozen peas
+                  along with the mussels, if you like.
+                </Typography>
+              </CardContent>
+            </Card>
 
-
-                  <Card className={classes.innerpaper}>
-                    <CardHeader
-                      avatar={
-                        <Avatar aria-label="recipe" className={classes.avatar}>
-                          JD
-                        </Avatar>
-                      }
-                      style={{ textAlign: "left" }}
-                      title="John Doe"
-                      subheader="Just Now"
-                    />
-                    <CardContent>
-                      <Typography
-                        variant="body2"
-                        color="textSecondary"
-                        component="p"
-                      >
-                        This impressive paella is a perfect party dish and a fun
-                        meal to cook together with your guests. Add 1 cup of
-                        frozen peas along with the mussels, if you like.
-                      </Typography>
-                    </CardContent>
-                  </Card>
+            <Card className={classes.innerpaper}>
+              <CardHeader
+                avatar={
+                  <Avatar aria-label="recipe" className={classes.avatar}>
+                    JD
+                  </Avatar>
+                }
+                style={{ textAlign: "left" }}
+                title="John Doe"
+                subheader="Just Now"
+              />
+              <CardContent>
+                <Typography variant="body2" color="textSecondary" component="p">
+                  This impressive paella is a perfect party dish and a fun meal
+                  to cook together with your guests. Add 1 cup of frozen peas
+                  along with the mussels, if you like.
+                </Typography>
+              </CardContent>
+            </Card>
 
             {/* ------------------------------------------ */}
           </Paper>

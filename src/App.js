@@ -16,7 +16,7 @@ import ClientsPage from "./components/Clients/ClientsPage";
 import ChangePassword from "./components/User/ChangePassword";
 import VoiceCalls from "./components/VoiceCalls/VoiceCalls";
 import EngagePage from "./components/Engage/Engage";
-import TemplatePage from "./components/Templates/TemplatePage";
+import EmailTemplatePage from "./components/Templates/EmailTemplatePage";
 import CalendarPage from "./components/Calendar/CalendarPage";
 import ReportingPage from "./components/Reports/Reporting";
 import BillingPage from "./components/Bills/BillingPage";
@@ -47,8 +47,18 @@ function App(props) {
           />
           <ProtectedRoute
             exact
-            path="/template"
-            component={TemplatePage}
+            path="/email-template"
+            component={EmailTemplatePage}
+          />
+          <ProtectedRoute
+            exact
+            path="/sms-template"
+            component={EmailTemplatePage}
+          />
+          <ProtectedRoute
+            exact
+            path="/script-template"
+            component={EmailTemplatePage}
           />
           <ProtectedRoute
             exact
