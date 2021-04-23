@@ -186,10 +186,9 @@ class EmailTemplatePage extends React.Component {
             pageSize={10}
             disableColumnMenu={true}
             autoHeight={true}
-            autoPageSize={true}
+            autoPageSize={false}
             checkboxSelection ={true}
             rowsPerPageOptions= {[10,25, 50, 100]}
-            Toolbar
           />
         </div>
         {this.state.isLoading && <Loader type="full-screen" />}

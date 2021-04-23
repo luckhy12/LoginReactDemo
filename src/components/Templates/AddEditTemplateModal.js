@@ -134,10 +134,10 @@ class AddEditTemplateModal extends React.Component {
                     <TextField
                       autoFocus
                       margin="dense"
-                      id="templateName"
+                      id="templateName_chr"
                       label="Template Name"
                       fullWidth
-                      name="templateName"
+                      name="templateName_chr"
                       value={this.state.template_data.templateName_chr}
                       onChange={this.handleChange}
                     />
@@ -152,10 +152,10 @@ class AddEditTemplateModal extends React.Component {
                     <TextField
                       autoFocus
                       margin="dense"
-                      id="Subject"
+                      id="subject_chr"
                       label="Subject"
                       fullWidth
-                      name="Subject"
+                      name="subject_chr"
                       value={this.state.template_data.subject_chr}
                       onChange={this.handleChange}
                     />
@@ -170,9 +170,9 @@ class AddEditTemplateModal extends React.Component {
                     <TextField
                       autoFocus
                       margin="dense"
-                      id="body"
+                      id="body_chr"
                       label="Body"
-                      name="body"
+                      name="body_chr"
                       fullWidth
                       value={this.state.template_data.body_chr}
                       onChange={this.handleChange}
