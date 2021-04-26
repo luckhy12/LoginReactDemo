@@ -17,6 +17,7 @@ import ChangePassword from "./components/User/ChangePassword";
 import VoiceCalls from "./components/VoiceCalls/VoiceCalls";
 import EngagePage from "./components/Engage/Engage";
 import EmailTemplatePage from "./components/Templates/EmailTemplatePage";
+import VideoCallPage from "./components/VideoCalls/VideoCallPage";
 import CalendarPage from "./components/Calendar/CalendarPage";
 import ReportingPage from "./components/Reports/Reporting";
 import BillingPage from "./components/Bills/BillingPage";
@@ -53,7 +54,7 @@ function App(props) {
           <ProtectedRoute
             exact
             path="/sms-template"
-            component={EmailTemplatePage}
+            component={VideoCallPage}
           />
           <ProtectedRoute
             exact
