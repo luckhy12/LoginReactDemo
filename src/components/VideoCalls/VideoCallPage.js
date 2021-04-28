@@ -46,9 +46,7 @@ class VideoCallPage extends Component {
       const response = await fetch(
         `https://staging-api.dialsight.com/api/VideoCall/GetAccessToken?identity=${this.state.identity}`
       );
-      console.log("response " + response);
       const data = await response.json();
-      console.log("data " + data);
       const room = await connect(data.accessToken, {
         name: "cool-room",
         audio: true,

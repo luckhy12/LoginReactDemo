@@ -33,7 +33,7 @@ class AddEditTemplateModal extends React.Component {
         templateName_chr: "",
         subject_chr: "",
         body_chr: "",
-        type_lng: 1,
+        type_lng: this.props.templateType,
         lastUpdatedByUserID_chr: this.props.data.userId,
         lastUpdatedDateTime_dtm: new Date(),
       },
@@ -43,7 +43,6 @@ class AddEditTemplateModal extends React.Component {
   }
 
   componentDidMount = async () => {
-    
     if (this.props.action === "edit") {
       const { selectedTemplate } = this.props;
       await this.setState((prevState) => {
@@ -148,24 +147,26 @@ class AddEditTemplateModal extends React.Component {
                       "text-danger"
                     )}
                   </Grid>
-                  <Grid item xs={12} sm={6}>
-                    <TextField
-                      autoFocus
-                      margin="dense"
-                      id="subject_chr"
-                      label="Subject"
-                      fullWidth
-                      name="subject_chr"
-                      value={this.state.template_data.subject_chr}
-                      onChange={this.handleChange}
-                    />
-                    {this.regUserFormValidator.message(
-                      "Subject",
-                      this.state.template_data.subject_chr,
-                      "required",
-                      "text-danger"
-                    )}
-                  </Grid>
+                  {this.props.templateType === 1 && (
+                    <Grid item xs={12} sm={6}>
+                      <TextField
+                        autoFocus
+                        margin="dense"
+                        id="subject_chr"
+                        label="Subject"
+                        fullWidth
+                        name="subject_chr"
+                        value={this.state.template_data.subject_chr}
+                        onChange={this.handleChange}
+                      />
+                      {this.regUserFormValidator.message(
+                        "Subject",
+                        this.state.template_data.subject_chr,
+                        "required",
+                        "text-danger"
+                      )}
+                    </Grid>
+                  )}
                   <Grid item xs={12} sm={6}>
                     <TextField
                       autoFocus
@@ -183,13 +184,16 @@ class AddEditTemplateModal extends React.Component {
                       "required",
                       "text-danger"
                     )}
-                  </Grid>               
-
+                  </Grid>
                 </Grid>
               </Container>
             </DialogContent>
             <DialogActions>
-              <Button onClick={this.handleClose} variant="contained" color="primary">
+              <Button
+                onClick={this.handleClose}
+                variant="contained"
+                color="primary"
+              >
                 Cancel
               </Button>
               <Button type="submit" variant="contained" color="primary">
@@ -206,7 +210,7 @@ class AddEditTemplateModal extends React.Component {
 }
 
 const mapDispatchToProps = {
-    addEditTemplate,
+  addEditTemplate,
 };
 const mapStateToProps = (state) => {
   return {

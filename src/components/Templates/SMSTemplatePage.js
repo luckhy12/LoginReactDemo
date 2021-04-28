@@ -32,7 +32,7 @@ const styles = (theme) => ({
   },
 });
 
-class EmailTemplatePage extends React.Component {
+class SMSTemplatePage extends React.Component {
   state = {
     reg_data: {
       templateId_Ids: 1,
@@ -45,7 +45,7 @@ class EmailTemplatePage extends React.Component {
     isOpenDialog: false,
     isOpenDeleteDialog: false,
     action: "add",
-    isLoading: true
+    isLoading: true,
   };
 
   componentDidMount = async () => {
@@ -123,16 +123,10 @@ class EmailTemplatePage extends React.Component {
     const columns = [
       {
         field: "templateName_chr",
-        headerName: "Email Template Name",
+        headerName: "SMS Template Name",
         width: 350,
         sortDirection: "asc",
         sortable: true,
-      },
-      {
-        field: "subject_chr",
-        headerName: "Email Template Subject",
-        sortable: true,
-        width: 350,
       },
       {
         field: "body_chr",
@@ -172,7 +166,7 @@ class EmailTemplatePage extends React.Component {
       <Container component="main">
         <div className="mb-5">
         <Typography variant="h4" gutterBottom>
-            Email
+            SMS
           </Typography>
           <div className="d-flex justify-content-end mb-2">
             <div className={classes.flex}></div>
@@ -205,7 +199,7 @@ class EmailTemplatePage extends React.Component {
             onClickAdd={this.onClickAdd}
             isOpenDialog={this.state.isOpenDialog}
             action={this.state.action}
-            templateType={1}
+            templateType={2}
             reloadList={this.reloadList}
             selectedTemplate={this.state.selectedTemplate}
           />
@@ -235,5 +229,5 @@ const mapStateToProps = (state) => {
   };
 };
 export default withStyles(styles, { withTheme: true })(
-  connect(mapStateToProps, mapDispatchToProps)(EmailTemplatePage)
+  connect(mapStateToProps, mapDispatchToProps)(SMSTemplatePage)
 );
