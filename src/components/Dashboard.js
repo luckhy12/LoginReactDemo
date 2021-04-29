@@ -78,6 +78,10 @@ const useStyles = makeStyles((theme) => ({
     textAlign: "center",
     color: theme.palette.text.secondary,
   },
+  heading: {
+    fontWeight: "bold",
+    marginTop:30,
+  }
 }));
 
 const message = `Truncation should be conditionally applicable on this long line of text
@@ -87,10 +91,11 @@ export default function MiniDrawer() {
   const classes = useStyles();
 
   return (
+    
     <div className={classes.root}>
       <Grid container spacing={3}>
         <Grid item xs={12}>
-          <Typography variant="h5" component="h5" gutterBottom>
+          <Typography variant="h5" component="h5" gutterBottom className={classes.heading}>
             Dashboard Overview
           </Typography>
         </Grid>

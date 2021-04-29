@@ -15,13 +15,14 @@ import RolesPage from "./components/Roles/RolesPage";
 import ClientsPage from "./components/Clients/ClientsPage";
 import ChangePassword from "./components/User/ChangePassword";
 import VoiceCalls from "./components/VoiceCalls/VoiceCalls";
-import EngagePage from "./components/Engage/Engage";
+import CustomerPage from "./components/Engage/CustomerPage";
 import EmailTemplatePage from "./components/Templates/EmailTemplatePage";
 import SMSTemplatePage from "./components/Templates/SMSTemplatePage";
 import ScriptTemplatePage from "./components/Templates/ScriptTemplatePage";
 import CalendarPage from "./components/Calendar/CalendarPage";
 import ReportingPage from "./components/Reports/Reporting";
 import BillingPage from "./components/Bills/BillingPage";
+import CustomerDetail from "./components/Engage/CustomerDetail";
 
 function App(props) {
   return (
@@ -45,7 +46,7 @@ function App(props) {
           <ProtectedRoute
             exact
             path="/engage"
-            component={EngagePage}
+            component={CustomerPage}
           />
           <ProtectedRoute
             exact
@@ -102,6 +103,7 @@ function App(props) {
             path="/voice-calls"
             component={VoiceCalls}
           />
+          <ProtectedRoute path="/customer/details" component={CustomerDetail}/>
         </Switch>
         </AppLayout>
       </BrowserRouter>

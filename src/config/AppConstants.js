@@ -5,5 +5,6 @@ const constants = {
   GET_ALL_ROLES: "GET_ALL_ROLES",
   GET_ALL_CLIENTS: "GET_ALL_CLIENTS",
   GET_ALL_TEMPLATES: "GET_ALL_TEMPLATES",
+  GET_ALL_CUSTOMERS: "GET_ALL_CUSTOMERS",
 };
 export default constants;

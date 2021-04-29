@@ -30,6 +30,10 @@ const styles = (theme) => ({
   flex: {
     flexGrow: 1,
   },
+  heading: {
+    fontWeight: "bold",
+    marginTop:30,
+  }
 });
 
 class SMSTemplatePage extends React.Component {
@@ -165,7 +169,7 @@ class SMSTemplatePage extends React.Component {
     return (
       <Container component="main">
         <div className="mb-5">
-        <Typography variant="h4" gutterBottom>
+        <Typography variant="h5" gutterBottom className={classes.heading}>
             SMS
           </Typography>
           <div className="d-flex justify-content-end mb-2">

@@ -16,6 +16,10 @@ const styles = (theme) => ({
     flex: {
       flexGrow: 1,
     },
+    heading: {
+      fontWeight: "bold",
+      marginTop:30,
+    }
   });
   
 class BillingPage extends React.Component {
@@ -26,7 +30,7 @@ class BillingPage extends React.Component {
       return (
         <Container component="main">
           <div className="mb-5">
-            <Typography variant="h6" gutterBottom>
+            <Typography variant="h5" gutterBottom>
             Billing
             </Typography>
            

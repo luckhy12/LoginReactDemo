@@ -1,23 +1,71 @@
 import React from "react";
 import { DataGrid } from "@material-ui/data-grid";
 import { withStyles } from "@material-ui/core/styles";
-import {
-  getAllTemplatesList,
-  deleteTemplate,
-} from "../../services/Template/TemplateService";
+import { getCustomersList } from "../../services/customer/CustomerService";
 import { connect } from "react-redux";
 import { NotificationManager } from "react-notifications";
 import Container from "@material-ui/core/Container";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
-import AddEditTemplateModal from "./AddEditTemplateModal";
-import ConfirmationDialog from "../utility/ConfirmationDialog";
 import Loader from "../utility/Loader";
 import IconButton from "@material-ui/core/IconButton";
-import DeleteOutlinedIcon from "@material-ui/icons/DeleteOutlined";
-import CreateOutlinedIcon from "@material-ui/icons/CreateOutlined";
+import EmailOutlinedIcon from "@material-ui/icons/EmailOutlined";
+import { withRouter } from "react-router-dom";
 
 const styles = (theme) => ({
+  root: {
+    border: 0,
+    color:
+      theme.palette.type === "light"
+        ? "rgba(0,0,0,.85)"
+        : "rgba(255,255,255,0.85)",
+    fontFamily: [
+      "-apple-system",
+      "BlinkMacSystemFont",
+      '"Segoe UI"',
+      "Roboto",
+      '"Helvetica Neue"',
+      "Arial",
+      "sans-serif",
+      '"Apple Color Emoji"',
+      '"Segoe UI Emoji"',
+      '"Segoe UI Symbol"',
+    ].join(","),
+    WebkitFontSmoothing: "auto",
+    letterSpacing: "normal",
+
+    "& .MuiDataGrid-columnsContainer": {
+      backgroundColor: theme.palette.type === "light" ? "#fafafa" : "#1d1d1d",
+    },
+    "& .MuiDataGrid-iconSeparator": {
+      display: "none",
+    },
+    "& .MuiDataGrid-colCellTitle": {
+      fontWeight: "bold",
+    },
+    "& .MuiDataGrid-columnsContainer": {
+      border: `2px solid ${
+        theme.palette.type === "light" ? "#f0f0f0" : "#303030"
+      }`,
+    },
+    "& .MuiDataGrid-dataContainer": {
+      borderRight: `2px solid ${
+        theme.palette.type === "light" ? "#f0f0f0" : "#303030"
+      }`,
+      borderLeft: `2px solid ${
+        theme.palette.type === "light" ? "#f0f0f0" : "#303030"
+      }`,
+    },
+    "& .MuiDataGrid-cell": {
+      color:
+        theme.palette.type === "light" ? "#c0c6cc" : "rgba(255,255,255,0.65)",
+      fontWeight: "bold",
+    },
+    "& .MuiDataGrid-row.Mui-odd": {
+      backgroundColor: "#d7ecff",
+    },
+  },
+
   paper: {
     marginTop: theme.spacing(8),
     display: "flex",
@@ -30,14 +78,15 @@ const styles = (theme) => ({
   flex: {
     flexGrow: 1,
   },
-
   heading: {
     fontWeight: "bold",
-    marginTop:30,
-  }
+    marginTop: 30,
+    paddingBottom: 25,
+  },
 });
 
-class EmailTemplatePage extends React.Component {
+class CustomerPage extends React.Component {
+
   state = {
     reg_data: {
       templateId_Ids: 1,
@@ -46,11 +95,11 @@ class EmailTemplatePage extends React.Component {
       body_chr: "",
       type_lng: 1,
     },
-    selectedTemplate: {},
+    selectedCustomer: {},
     isOpenDialog: false,
     isOpenDeleteDialog: false,
     action: "add",
-    isLoading: true
+    isLoading: true,
   };
 
   componentDidMount = async () => {
@@ -63,12 +112,11 @@ class EmailTemplatePage extends React.Component {
     let data = {
       Calling_UserID_chr: userId,
       UserID_chr: userId,
-      Type_lng: 2,
       Return_All_Rows_ysn: true,
       Page_Index_int: 1,
       Page_Size_int: 100,
     };
-    await this.props.getAllTemplatesList(data);
+    await this.props.getCustomersList(data);
   };
 
   handleChange = async (e) => {
@@ -104,45 +152,46 @@ class EmailTemplatePage extends React.Component {
     });
   };
 
-  onClickDelete = async (row) => {
-    await this.setState({ selectedTemplate: row });
-    await this.onHandleModel("isOpenDeleteDialog");
-  };
-
-  deleteTemplate = async () => {
-    const { selectedTemplate } = this.state;
-    this.props.deleteTemplate(
-      selectedTemplate,
-      (res) => {
-        NotificationManager.success(res);
-        this.reloadList();
-      },
-      (err) => {
-        NotificationManager.error(err);
-      }
-    );
-  };
+  onCustomerSelected = (param) => {
+    console.log("selected row "+ param.data.customerID_ids);
+    this.props.history.push({
+      pathname : '/customer/details',
+      state: { customerData: param.data }
+    });
+  }
 
   render() {
     const { classes } = this.props;
     const columns = [
       {
-        field: "templateName_chr",
-        headerName: "Email Template Name",
-        width: 350,
+        field: "customerName_chr",
+        headerName: "Customer Name",
+        width: 250,
         sortDirection: "asc",
         sortable: true,
       },
       {
-        field: "subject_chr",
-        headerName: "Email Template Subject",
+        field: "stage_chr",
+        headerName: "Stage",
+        width: 150,
         sortable: true,
-        width: 350,
       },
       {
-        field: "body_chr",
-        headerName: "Body",
-        width: 350,
+        field: "age_lng",
+        headerName: "Age",
+        width: 150,
+        sortable: true,
+      },
+      {
+        field: "phone_chr",
+        headerName: "Phone",
+        width: 200,
+        sortable: true,
+      },
+      {
+        field: "email_chr",
+        headerName: "Email",
+        width: 200,
         sortable: true,
       },
       {
@@ -154,17 +203,8 @@ class EmailTemplatePage extends React.Component {
         renderCell: (params) => {
           return (
             <div className={classes.flex}>
-              <IconButton
-                aria-label="delete"
-                onClick={(e) => this.onClickEdit(params.row)}
-              >
-                <CreateOutlinedIcon color="primary" />
-              </IconButton>
-              <IconButton
-                aria-label="delete"
-                onClick={(e) => this.onClickDelete(params.row)}
-              >
-                <DeleteOutlinedIcon color="primary" />
+              <IconButton aria-label="delete">
+                <EmailOutlinedIcon color="primary" />
               </IconButton>
             </div>
           );
@@ -176,25 +216,18 @@ class EmailTemplatePage extends React.Component {
     return (
       <Container component="main">
         <div className="mb-5">
-        <Typography variant="h5" gutterBottom className={classes.heading}>
-            Email
+          <Typography variant="h5" gutterBottom className={classes.heading}>
+            Customer Overview
           </Typography>
-          <div className="d-flex justify-content-end mb-2">
-            <div className={classes.flex}></div>
-            <Button
-              className={classes.add_btn}
-              variant="contained"
-              color="primary"
-              onClick={this.onClickAdd}
-            >
-              Add
-            </Button>
+
+          <div >
+            
           </div>
           <DataGrid
-            rows={this.props.templatesListData}
+            className={classes.root}
+            rows={this.props.customerListData}
             columns={columns.map((column) => ({
               ...column,
-              disableClickEventBubbling: true,
             }))}
             pageSize={10}
             disableColumnMenu={true}
@@ -202,44 +235,24 @@ class EmailTemplatePage extends React.Component {
             autoPageSize={false}
             checkboxSelection={true}
             rowsPerPageOptions={[10, 25, 50, 100]}
-            
+            onRowSelected={(e)=> this.onCustomerSelected(e)}
           />
         </div>
         {this.state.isLoading && <Loader type="full-screen" />}
-        {this.state.isOpenDialog && (
-          <AddEditTemplateModal
-            onClickAdd={this.onClickAdd}
-            isOpenDialog={this.state.isOpenDialog}
-            action={this.state.action}
-            templateType={1}
-            reloadList={this.reloadList}
-            selectedTemplate={this.state.selectedTemplate}
-          />
-        )}
-        {this.state.isOpenDeleteDialog && (
-          <ConfirmationDialog
-            onHandleModel={(e) => this.onHandleModel("isOpenDeleteDialog")}
-            isOpenDialog={this.state.isOpenDeleteDialog}
-            action={(e) => this.deleteTemplate(this.state.selectedTemplate)}
-            title={"Delete Template"}
-            content={"Are you sure want to delete ?"}
-          />
-        )}
       </Container>
     );
   }
 }
 
 const mapDispatchToProps = {
-  getAllTemplatesList,
-  deleteTemplate,
+  getCustomersList,
 };
 const mapStateToProps = (state) => {
   return {
-    templatesListData: state.template.templatesListData,
+    customerListData: state.customer.customerListData,
     profileData: state.login.loginData,
   };
 };
 export default withStyles(styles, { withTheme: true })(
-  connect(mapStateToProps, mapDispatchToProps)(EmailTemplatePage)
+  withRouter(connect(mapStateToProps, mapDispatchToProps)(CustomerPage))
 );
