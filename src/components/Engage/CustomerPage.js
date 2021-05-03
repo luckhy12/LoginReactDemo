@@ -3,13 +3,17 @@ import { DataGrid } from "@material-ui/data-grid";
 import { withStyles } from "@material-ui/core/styles";
 import { getCustomersList } from "../../services/customer/CustomerService";
 import { connect } from "react-redux";
+import SendTextEmailModal from "./SendTex_EmailModel";
 import { NotificationManager } from "react-notifications";
 import Container from "@material-ui/core/Container";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import Loader from "../utility/Loader";
 import IconButton from "@material-ui/core/IconButton";
-import EmailOutlinedIcon from "@material-ui/icons/EmailOutlined";
+import EmailRoundedIcon from "@material-ui/icons/EmailRounded";
+import TextsmsRoundedIcon from "@material-ui/icons/TextsmsRounded";
+import PhoneRoundedIcon from "@material-ui/icons/PhoneRounded";
+import VideocamRoundedIcon from "@material-ui/icons/VideocamRounded";
 import { withRouter } from "react-router-dom";
 
 const styles = (theme) => ({
@@ -86,7 +90,6 @@ const styles = (theme) => ({
 });
 
 class CustomerPage extends React.Component {
-
   state = {
     reg_data: {
       templateId_Ids: 1,
@@ -128,14 +131,6 @@ class CustomerPage extends React.Component {
     });
   };
 
-  onClickAdd = async () => {
-    await this.setState((prevState) => {
-      const isOpenDialog = !prevState.isOpenDialog;
-      const action = "add";
-      return { isOpenDialog, action };
-    });
-  };
-
   onHandleModel = async (name) => {
     let value = this.state[name];
     await this.setState({
@@ -143,22 +138,47 @@ class CustomerPage extends React.Component {
     });
   };
 
-  onClickEdit = async (row) => {
-    await this.setState({ selectedTemplate: row });
+  onCustomerSelected = (param) => {
+    console.log("selected row " + param.data.customerID_ids);
+    this.props.history.push({
+      pathname: "/customer/details",
+      state: { customerData: param.data },
+    });
+  };
+
+  onClickVideoCall = async () => {
     await this.setState((prevState) => {
       const isOpenDialog = !prevState.isOpenDialog;
-      const action = "edit";
+      const action = "add";
       return { isOpenDialog, action };
     });
   };
 
-  onCustomerSelected = (param) => {
-    console.log("selected row "+ param.data.customerID_ids);
-    this.props.history.push({
-      pathname : '/customer/details',
-      state: { customerData: param.data }
+  onClickPhoneCall = async () => {
+    await this.setState((prevState) => {
+      const isOpenDialog = !prevState.isOpenDialog;
+      const action = "add";
+      return { isOpenDialog, action };
     });
-  }
+  };
+
+  onClickEmail = async (row) => {
+    await this.setState({ selectedCustomer: row });
+    await this.setState((prevState) => {
+      const isOpenDialog = !prevState.isOpenDialog;
+      const action = "Email";
+      return { isOpenDialog, action };
+    });
+  };
+
+  onClickText = async (row) => {
+    await this.setState({ selectedCustomer: row });
+    await this.setState((prevState) => {
+      const isOpenDialog = !prevState.isOpenDialog;
+      const action = "Text";
+      return { isOpenDialog, action };
+    });
+  };
 
   render() {
     const { classes } = this.props;
@@ -198,13 +218,26 @@ class CustomerPage extends React.Component {
         field: "acction",
         headerName: "Actions",
         sortable: false,
-        headerAlign: "right",
-        align: "right",
+        headerAlign: "left",
+        align: "left",
         renderCell: (params) => {
           return (
             <div className={classes.flex}>
-              <IconButton aria-label="delete">
-                <EmailOutlinedIcon color="primary" />
+              <IconButton aria-label="delete"
+               onClick={(e) => this.onClickVideoCall(params.row)}>
+                <VideocamRoundedIcon color="primary" />
+              </IconButton>
+              <IconButton aria-label="delete" 
+               onClick={(e) => this.onClickPhoneCall(params.row)}>
+                <PhoneRoundedIcon color="primary" />
+              </IconButton>
+              <IconButton aria-label="delete" 
+               onClick={(e) => this.onClickEmail(params.row)}>
+                <EmailRoundedIcon color="primary" />
+              </IconButton>
+              <IconButton aria-label="delete" 
+               onClick={(e) => this.onClickText(params.row)}>
+                <TextsmsRoundedIcon color="primary" />
               </IconButton>
             </div>
           );
@@ -220,14 +253,13 @@ class CustomerPage extends React.Component {
             Customer Overview
           </Typography>
 
-          <div >
-            
-          </div>
+          <div></div>
           <DataGrid
             className={classes.root}
             rows={this.props.customerListData}
             columns={columns.map((column) => ({
               ...column,
+              disableClickEventBubbling: true,
             }))}
             pageSize={10}
             disableColumnMenu={true}
@@ -235,10 +267,18 @@ class CustomerPage extends React.Component {
             autoPageSize={false}
             checkboxSelection={true}
             rowsPerPageOptions={[10, 25, 50, 100]}
-            onRowSelected={(e)=> this.onCustomerSelected(e)}
+            onRowSelected={(e) => this.onCustomerSelected(e)}
           />
         </div>
         {this.state.isLoading && <Loader type="full-screen" />}
+        {this.state.isOpenDialog && (
+          <SendTextEmailModal
+            onClickEmail={this.onClickEmail}
+            isOpenDialog={this.state.isOpenDialog}
+            action={this.state.action}
+            selectedCustomer={this.state.selectedCustomer}
+          />
+        )}
       </Container>
     );
   }
