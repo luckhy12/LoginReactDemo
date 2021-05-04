@@ -140,20 +140,17 @@ class CustomerPage extends React.Component {
   };
 
   onCustomerSelected = (param) => {
-    console.log("selected row " + param.data.customerID_ids);
     this.props.history.push({
       pathname: "/customer/details",
       state: { customerData: param.data },
     });
   };
 
-  // onClickVideoCall = async () => {
-  //   await this.setState((prevState) => {
-  //     const isOpenDialog = !prevState.isOpenDialog;
-  //     const action = "add";
-  //     return { isOpenDialog, action };
-  //   });
-  // };
+  onClickVideoCall = async (row) => {
+    this.props.history.push({
+      pathname: "/customer/Video-call",
+    });
+  };
 
   onClickPhoneCall = async (row) => {
     await this.setState({ selectedCustomer: row });
@@ -225,7 +222,8 @@ class CustomerPage extends React.Component {
         renderCell: (params) => {
           return (
             <div className={classes.flex}>
-              <IconButton aria-label="delete">
+              <IconButton aria-label="delete"
+               onClick={(e) => this.onClickVideoCall(params.row)}>
                 <VideocamRoundedIcon color="primary" />
               </IconButton>
               <IconButton
@@ -272,7 +270,7 @@ class CustomerPage extends React.Component {
             disableColumnMenu={true}
             autoHeight={true}
             autoPageSize={false}
-            checkboxSelection={true}
+            checkboxSelection={false}
             rowsPerPageOptions={[10, 25, 50, 100]}
             onRowSelected={(e) => this.onCustomerSelected(e)}
           />

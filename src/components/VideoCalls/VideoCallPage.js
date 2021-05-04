@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { withRouter } from "react-router-dom";
 import "./VideoCall.scss";
 
 import Room from "./Room";
@@ -116,4 +117,6 @@ class VideoCallPage extends Component {
   }
 }
 
-export default withStyles(styles, { withTheme: true })(VideoCallPage);
+export default withStyles(styles, { withTheme: true })(
+  withRouter(VideoCallPage)
+  );

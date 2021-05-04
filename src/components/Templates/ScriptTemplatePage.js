@@ -249,7 +249,7 @@ class ScriptTemplatePage extends React.Component {
             disableColumnMenu={true}
             autoHeight={true}
             autoPageSize={false}
-            checkboxSelection={true}
+            checkboxSelection={false}
             rowsPerPageOptions={[10, 25, 50, 100]}
           />
         </div>

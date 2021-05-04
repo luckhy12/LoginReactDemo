@@ -23,6 +23,7 @@ import CalendarPage from "./components/Calendar/CalendarPage";
 import ReportingPage from "./components/Reports/Reporting";
 import BillingPage from "./components/Bills/BillingPage";
 import CustomerDetail from "./components/Engage/CustomerDetail";
+import VideoCallPage from "./components/VideoCalls/VideoCallPage"
 
 function App(props) {
   return (
@@ -104,6 +105,7 @@ function App(props) {
             component={VoiceCalls}
           />
           <ProtectedRoute path="/customer/details" component={CustomerDetail}/>
+          <ProtectedRoute path="/customer/Video-call" component={VideoCallPage}/>
         </Switch>
         </AppLayout>
       </BrowserRouter>

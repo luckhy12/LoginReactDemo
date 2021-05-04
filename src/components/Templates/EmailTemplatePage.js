@@ -200,7 +200,7 @@ class EmailTemplatePage extends React.Component {
             disableColumnMenu={true}
             autoHeight={true}
             autoPageSize={false}
-            checkboxSelection={true}
+            checkboxSelection={false}
             rowsPerPageOptions={[10, 25, 50, 100]}
             
           />
