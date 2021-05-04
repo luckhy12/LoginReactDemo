@@ -4,7 +4,7 @@ import { serviceCall } from "../ServiceCall";
 export const sendTextMessage = (data, callback, errorCallBack) => {
   return async (dispatch) => {
     serviceCall({
-      url: "/api/SMS/SendSMS",
+      url: "/api/TextSMS/SendTextSMS",
       method: "post",
       data: data,
     })
@@ -33,6 +33,24 @@ export const sendEmail = (data, callback, errorCallBack) => {
         })
         .catch((error) => {
           errorCallBack && errorCallBack(error.response.data);
+        });
+    };
+  };
+
+  export const makeVoiceCall = (data, callback, errorCallBack) => {
+    return async (dispatch) => {
+        serviceCall({
+        url: "/api/VoiceCall/MakeVoiceCall",
+        method: "post",
+        data: data,
+      })
+        .then((response) => {
+          if (response && response.data) {
+            callback && callback(response);
+          }
+        })
+        .catch((error) => {
+          errorCallBack && errorCallBack(error.response);
         });
     };
   };

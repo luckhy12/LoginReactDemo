@@ -4,6 +4,7 @@ import { withStyles } from "@material-ui/core/styles";
 import { getCustomersList } from "../../services/customer/CustomerService";
 import { connect } from "react-redux";
 import SendTextEmailModal from "./SendTex_EmailModel";
+import CustomerCallModel from "./CustomerCallModel";
 import { NotificationManager } from "react-notifications";
 import Container from "@material-ui/core/Container";
 import Button from "@material-ui/core/Button";
@@ -100,7 +101,7 @@ class CustomerPage extends React.Component {
     },
     selectedCustomer: {},
     isOpenDialog: false,
-    isOpenDeleteDialog: false,
+    isOpenCallDialog: false,
     action: "add",
     isLoading: true,
   };
@@ -146,19 +147,20 @@ class CustomerPage extends React.Component {
     });
   };
 
-  onClickVideoCall = async () => {
-    await this.setState((prevState) => {
-      const isOpenDialog = !prevState.isOpenDialog;
-      const action = "add";
-      return { isOpenDialog, action };
-    });
-  };
+  // onClickVideoCall = async () => {
+  //   await this.setState((prevState) => {
+  //     const isOpenDialog = !prevState.isOpenDialog;
+  //     const action = "add";
+  //     return { isOpenDialog, action };
+  //   });
+  // };
 
-  onClickPhoneCall = async () => {
+  onClickPhoneCall = async (row) => {
+    await this.setState({ selectedCustomer: row });
     await this.setState((prevState) => {
-      const isOpenDialog = !prevState.isOpenDialog;
+      const isOpenCallDialog = !prevState.isOpenCallDialog;
       const action = "add";
-      return { isOpenDialog, action };
+      return { isOpenCallDialog, action };
     });
   };
 
@@ -223,20 +225,25 @@ class CustomerPage extends React.Component {
         renderCell: (params) => {
           return (
             <div className={classes.flex}>
-              <IconButton aria-label="delete"
-               onClick={(e) => this.onClickVideoCall(params.row)}>
+              <IconButton aria-label="delete">
                 <VideocamRoundedIcon color="primary" />
               </IconButton>
-              <IconButton aria-label="delete" 
-               onClick={(e) => this.onClickPhoneCall(params.row)}>
+              <IconButton
+                aria-label="delete"
+                onClick={(e) => this.onClickPhoneCall(params.row)}
+              >
                 <PhoneRoundedIcon color="primary" />
               </IconButton>
-              <IconButton aria-label="delete" 
-               onClick={(e) => this.onClickEmail(params.row)}>
+              <IconButton
+                aria-label="delete"
+                onClick={(e) => this.onClickEmail(params.row)}
+              >
                 <EmailRoundedIcon color="primary" />
               </IconButton>
-              <IconButton aria-label="delete" 
-               onClick={(e) => this.onClickText(params.row)}>
+              <IconButton
+                aria-label="delete"
+                onClick={(e) => this.onClickText(params.row)}
+              >
                 <TextsmsRoundedIcon color="primary" />
               </IconButton>
             </div>
@@ -275,6 +282,14 @@ class CustomerPage extends React.Component {
           <SendTextEmailModal
             onClickEmail={this.onClickEmail}
             isOpenDialog={this.state.isOpenDialog}
+            action={this.state.action}
+            selectedCustomer={this.state.selectedCustomer}
+          />
+        )}
+        {this.state.isOpenCallDialog && (
+          <CustomerCallModel
+            onClickPhoneCall={this.onClickPhoneCall}
+            isOpenCallDialog={this.state.isOpenCallDialog}
             action={this.state.action}
             selectedCustomer={this.state.selectedCustomer}
           />

@@ -99,18 +99,15 @@ class SendTextEmailModel extends React.Component {
         return item.templateID_ids === this.state.cust_data.templateId
       });
 
-
       if (this.props.action === "Text") {
 
         let data = [{
           strFrom: this.state.strFrom,
           strTo: this.state.cust_data.strTo,
-          strBody: selectedTemplate.body_chr,
+          strBody: selectedTemplate[0].body_chr,
           strToName: this.state.cust_data.strToName,
           
         }];
-
-        console.log("postdata "+data);
 
         this.props.sendTextMessage(
           data,
@@ -123,15 +120,15 @@ class SendTextEmailModel extends React.Component {
             this.handleClose();
           },
           (err) => {
-            NotificationManager.error(err);
+            NotificationManager.error(err.data.message);
           }
         );
       } else {
         
         let data = {
           strFrom: this.state.strFrom,
-          strSubject: selectedTemplate.subject_chr,
-          strBody: selectedTemplate.body_chr,
+          strSubject: selectedTemplate[0].subject_chr,
+          strBody: selectedTemplate[0].body_chr,
           strAttachmentPath: "",
           sendTos: [{strTo: this.state.cust_data.strTo, strToName: this.state.cust_data.strToName}],
         };
