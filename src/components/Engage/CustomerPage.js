@@ -185,7 +185,7 @@ class CustomerPage extends React.Component {
       {
         field: "customerName_chr",
         headerName: "Customer Name",
-        width: 250,
+        width: 200,
         sortDirection: "asc",
         sortable: true,
       },
@@ -204,7 +204,7 @@ class CustomerPage extends React.Component {
       {
         field: "phone_chr",
         headerName: "Phone",
-        width: 200,
+        width: 150,
         sortable: true,
       },
       {

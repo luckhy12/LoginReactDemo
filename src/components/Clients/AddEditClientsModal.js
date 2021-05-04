@@ -78,7 +78,7 @@ class AddEditUserModal extends React.Component {
         this.props.createClient(
           this.state.role_data,
           (res) => {
-            NotificationManager.success("Sussess");
+            NotificationManager.success("Success");
             this.props.reloadList();
             this.handleClose();
           },
@@ -93,7 +93,7 @@ class AddEditUserModal extends React.Component {
             if (typeof res === "string") {
               NotificationManager.success(res);
             } else {
-              NotificationManager.success("Sussess");
+              NotificationManager.success("Success");
             }
             this.props.reloadList();
             this.handleClose();

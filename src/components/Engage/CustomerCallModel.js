@@ -44,7 +44,7 @@ class CustomerCallModel extends React.Component {
           if (typeof res === "string") {
             NotificationManager.success(res);
           } else {
-            NotificationManager.success("Sussess");
+            NotificationManager.success("Success");
           }
         },
         (err) => {

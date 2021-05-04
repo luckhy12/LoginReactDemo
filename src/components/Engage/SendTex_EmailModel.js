@@ -115,7 +115,7 @@ class SendTextEmailModel extends React.Component {
             if (typeof res === "string") {
               NotificationManager.success(res);
             } else {
-              NotificationManager.success("Sussess");
+              NotificationManager.success("Success");
             }
             this.handleClose();
           },
@@ -138,7 +138,7 @@ class SendTextEmailModel extends React.Component {
             if (typeof res === "string") {
               NotificationManager.success(res);
             } else {
-              NotificationManager.success("Sussess");
+              NotificationManager.success("Success");
             }
             this.handleClose();
           },
