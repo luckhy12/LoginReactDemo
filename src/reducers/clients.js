@@ -6,6 +6,7 @@ const innitialData = {
 export default function clients(state = innitialData, action) {
   switch (action.type) {
     case ActionConstants.GET_ALL_CLIENTS: {
+      console.log("print dataq  "+ JSON.stringify(action.data[0]));
       return {
         ...state,
         allClientsList: action.data,

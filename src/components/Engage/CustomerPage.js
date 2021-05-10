@@ -5,9 +5,7 @@ import { getCustomersList } from "../../services/customer/CustomerService";
 import { connect } from "react-redux";
 import SendTextEmailModal from "./SendTex_EmailModel";
 import CustomerCallModel from "./CustomerCallModel";
-import { NotificationManager } from "react-notifications";
 import Container from "@material-ui/core/Container";
-import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import Loader from "../utility/Loader";
 import IconButton from "@material-ui/core/IconButton";
@@ -39,9 +37,6 @@ const styles = (theme) => ({
     WebkitFontSmoothing: "auto",
     letterSpacing: "normal",
 
-    "& .MuiDataGrid-columnsContainer": {
-      backgroundColor: theme.palette.type === "light" ? "#fafafa" : "#1d1d1d",
-    },
     "& .MuiDataGrid-iconSeparator": {
       display: "none",
     },

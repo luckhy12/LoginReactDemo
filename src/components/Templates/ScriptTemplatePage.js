@@ -38,9 +38,6 @@ const styles = (theme) => ({
     WebkitFontSmoothing: 'auto',
     letterSpacing: 'normal',
 
-    '& .MuiDataGrid-columnsContainer': {
-      backgroundColor: theme.palette.type === 'light' ? '#fafafa' : '#1d1d1d',
-    },
     '& .MuiDataGrid-iconSeparator': {
       display: 'none',
     },

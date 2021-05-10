@@ -46,12 +46,7 @@ class VoiceCalls extends React.Component {
   };
 
   componentDidMount = async () => {
-    this.reloadList();
     this.setState({ isLoading: false });
-  };
-
-  reloadList = async () => {
-    const { userId } = this.props.profileData;
   };
 
   handleChange = async (e) => {

@@ -125,6 +125,7 @@ const MiniDrawer = function (props) {
   const [open, setOpen] = React.useState(false);
   const [adminOpen, setAdminOpen] = React.useState(false);
   const [templateOpen, setTemplateOpen] = React.useState(false);
+  const [reportOpen, setReportOpen] = React.useState(false);
   const [selectedNav, setSelectedNav] = React.useState("Dashboard");
   const [anchorEl, setAnchorEl] = React.useState(null);
   const isOpenSettingmenu = Boolean(anchorEl);
@@ -151,6 +152,7 @@ const MiniDrawer = function (props) {
     setOpen(false);
     setAdminOpen(false);
     setTemplateOpen(false);
+    setReportOpen(false);
   };
 
   function handleAdminClick() {
@@ -159,6 +161,10 @@ const MiniDrawer = function (props) {
 
   function handleTemplateClick() {
     setTemplateOpen(!templateOpen);
+  }
+
+  function handleReportClick() {
+    setReportOpen(!reportOpen);
   }
 
   const { profileData } = props;
@@ -391,14 +397,12 @@ const MiniDrawer = function (props) {
               <ListItemText primary={"Calendar"} className={classes.linkText} />
             </ListItem>
           </Link>
-          <Link to="/reporting">
+          <Link>
             <ListItem
               button
               key={"Reporting"}
-              onClick={(e) => setSelectedNav("Reporting")}
-              selected={selectedNav === "Reporting"}
+              onClick={handleReportClick}
               title="Reporting"
-              classes={{ selected: classes.active }}
             >
               <ListItemIcon>
                 <EqualizerIcon className={classes.linkText} />
@@ -407,8 +411,84 @@ const MiniDrawer = function (props) {
                 primary={"Reporting"}
                 className={classes.linkText}
               />
+              {reportOpen ? (
+                <IconExpandLess className={classes.linkText} />
+              ) : (
+                <IconExpandMore className={classes.linkText} />
+              )}
             </ListItem>
           </Link>
+          <Collapse in={reportOpen} timeout="auto" unmountOnExit>
+            <Divider />
+            <List component="div" disablePadding>
+              <Link to="/email-logs">
+                <ListItem
+                  button
+                  key={"EmailLogs"}
+                  onClick={(e) => setSelectedNav("EmailLogs")}
+                  selected={selectedNav === "EmailLogs"}
+                  title="Email Logs"
+                  classes={{ selected: classes.active }}
+                >
+                  <ListItemText
+                    inset
+                    primary={"Email Logs"}
+                    className={classes.linkText}
+                  />
+                </ListItem>
+              </Link>
+              <Link to="/sms-logs">
+                <ListItem
+                  button
+                  key={"SMSLogs"}
+                  onClick={(e) => setSelectedNav("SMSLogs")}
+                  selected={selectedNav === "SMSLogs"}
+                  title="SMS Logs"
+                  classes={{ selected: classes.active }}
+                >
+                  <ListItemText
+                    inset
+                    primary={"SMS Logs"}
+                    className={classes.linkText}
+                  />
+                </ListItem>
+              </Link>
+              <Link to="/voicecall-logs">
+                <ListItem
+                  button
+                  key={"VoiceCallLogs"}
+                  onClick={(e) => setSelectedNav("VoiceCallLogs")}
+                  selected={selectedNav === "VoiceCallLogs"}
+                  title="Voice Call Logs"
+                  classes={{ selected: classes.active }}
+                >
+                  <ListItemText
+                    inset
+                    primary={"Voice Call Logs"}
+                    className={classes.linkText}
+                  />
+                </ListItem>
+              </Link>
+              <Link to="/videocall-logs">
+                <ListItem
+                  button
+                  key={"VideoCallLogs"}
+                  onClick={(e) => setSelectedNav("VideoCallLogs")}
+                  selected={selectedNav === "VideoCallLogs"}
+                  title="Video Call Logs"
+                  classes={{ selected: classes.active }}
+                >
+                  <ListItemText
+                    inset
+                    primary={"Video Call Logs"}
+                    className={classes.linkText}
+                  />
+                </ListItem>
+              </Link>
+            
+            </List>
+          </Collapse>
+          
           <Link to="/biling">
             <ListItem
               button

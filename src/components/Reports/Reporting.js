@@ -66,6 +66,11 @@ const rows = [
   createData("Black Friday", 567.0, "$180000", "67.00%", "67.00%"),
   createData("New Year Sale", 567.0, "$180000", "67.00%", "67.00%"),
   createData("Cyber Monday", 567.0, "$180000", "67.00%", "6.00%"),
+  createData("Cyber Monday", 567.0, "$180000", "67.00%", "6.00%"),
+  createData("Cyber Monday", 567.0, "$180000", "67.00%", "6.00%"),
+  createData("Cyber Monday", 567.0, "$180000", "67.00%", "6.00%"),
+  createData("Cyber Monday", 567.0, "$180000", "67.00%", "6.00%"),
+  createData("Cyber Monday", 567.0, "$180000", "67.00%", "6.00%"),
 ];
 
 function descendingComparator(a, b, orderBy) {

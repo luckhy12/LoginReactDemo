@@ -76,7 +76,7 @@ class CustomerDetail extends React.Component {
                     textAlign="left"
                     color="black"
                   >
-                    <img src="Task.png" className={classes.outerTitleIcons} />
+                    <img src="Task.png" alt="Task" className={classes.outerTitleIcons} />
                   </Box>
                 </Typography>
                 <Typography variant="h5" className={classes.headingName}>

@@ -5,6 +5,8 @@ import user from './user';
 import clients from './clients';
 import template from './template';
 import customer from './customer';
+import messageLogs from './report';
+import voiceCallLogs from './voiceCallLog';
 
 export default combineReducers({
   login,
@@ -12,5 +14,7 @@ export default combineReducers({
   roles,
   clients,
   template,
-  customer
+  customer,
+  messageLogs,
+  voiceCallLogs
 })

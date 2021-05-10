@@ -12,8 +12,6 @@ import CardHeader from "@material-ui/core/CardHeader";
 import CardContent from "@material-ui/core/CardContent";
 import Chip from "@material-ui/core/Chip";
 
-const drawerWidth = 240;
-
 const useStyles = makeStyles((theme) => ({
   outerTitleIcons: {
     width: 15,
@@ -84,8 +82,8 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const message = `Truncation should be conditionally applicable on this long line of text
- as this is a much longer line than what the container can support. `;
+// const message = `Truncation should be conditionally applicable on this long line of text
+//  as this is a much longer line than what the container can support. `;
 
 export default function MiniDrawer() {
   const classes = useStyles();
@@ -127,7 +125,7 @@ export default function MiniDrawer() {
                 color="black"
               >
                 Today's Task{" "}
-                <img src="Task.png" className={classes.outerTitleIcons} />
+                <img src="Task.png" alt="Task" className={classes.outerTitleIcons} />
               </Box>
             </Typography>
 
@@ -172,7 +170,7 @@ export default function MiniDrawer() {
                 color="black"
               >
                 This week stats{" "}
-                <img src="Vector.png" className={classes.outerTitleIcons} />
+                <img src="Vector.png" alt="Vector" className={classes.outerTitleIcons} />
               </Box>
             </Typography>
             {/* -----------------Inner Content Cell 2 --------------- */}
@@ -309,7 +307,7 @@ export default function MiniDrawer() {
                 color="black"
               >
                 Live Feed{" "}
-                <img src="LiveFeed.png" className={classes.outerTitleIcons} />
+                <img src="LiveFeed.png" alt="live" className={classes.outerTitleIcons} />
               </Box>
             </Typography>
             {/* -----------------Inner Content Cell 3 --------------- */}
