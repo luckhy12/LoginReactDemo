@@ -18,6 +18,58 @@ import DeleteOutlinedIcon from "@material-ui/icons/DeleteOutlined";
 import CreateOutlinedIcon from "@material-ui/icons/CreateOutlined";
 
 const styles = (theme) => ({
+
+  root: {
+    border: 0,
+    color:
+      theme.palette.type === "light"
+        ? "rgba(0,0,0,.85)"
+        : "rgba(255,255,255,0.85)",
+    fontFamily: [
+      "-apple-system",
+      "BlinkMacSystemFont",
+      '"Segoe UI"',
+      "Roboto",
+      '"Helvetica Neue"',
+      "Arial",
+      "sans-serif",
+      '"Apple Color Emoji"',
+      '"Segoe UI Emoji"',
+      '"Segoe UI Symbol"',
+    ].join(","),
+    WebkitFontSmoothing: "auto",
+    letterSpacing: "normal",
+
+    "& .MuiDataGrid-iconSeparator": {
+      display: "none",
+    },
+    "& .MuiDataGrid-colCellTitle": {
+      fontWeight: "bold",
+    },
+    "& .MuiDataGrid-columnsContainer": {
+      border: `2px solid ${
+        theme.palette.type === "light" ? "#f0f0f0" : "#303030"
+      }`,
+    },
+    "& .MuiDataGrid-dataContainer": {
+      borderRight: `2px solid ${
+        theme.palette.type === "light" ? "#f0f0f0" : "#303030"
+      }`,
+      borderLeft: `2px solid ${
+        theme.palette.type === "light" ? "#f0f0f0" : "#303030"
+      }`,
+    },
+    "& .MuiDataGrid-cell": {
+      color:
+        theme.palette.type === "light" ? "#9BA3B9" : "rgba(255,255,255,0.65)",
+      fontWeight: "bold",
+    },
+    "& .MuiDataGrid-row.Mui-odd": {
+      backgroundColor: "#F4F2FF",
+    },
+  },
+
+  
   paper: {
     marginTop: theme.spacing(8),
     display: "flex",
@@ -32,8 +84,8 @@ const styles = (theme) => ({
   },
   heading: {
     fontWeight: "bold",
-    marginTop:30,
-  }
+    marginTop: 30,
+  },
 });
 
 class SMSTemplatePage extends React.Component {
@@ -169,7 +221,7 @@ class SMSTemplatePage extends React.Component {
     return (
       <Container component="main">
         <div className="mb-5">
-        <Typography variant="h5" gutterBottom className={classes.heading}>
+          <Typography variant="h5" gutterBottom className={classes.heading}>
             SMS
           </Typography>
           <div className="d-flex justify-content-end mb-2">
@@ -184,6 +236,7 @@ class SMSTemplatePage extends React.Component {
             </Button>
           </div>
           <DataGrid
+            className={classes.root}
             rows={this.props.templatesListData}
             columns={columns.map((column) => ({
               ...column,

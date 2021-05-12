@@ -58,11 +58,11 @@ const styles = (theme) => ({
     },
     "& .MuiDataGrid-cell": {
       color:
-        theme.palette.type === "light" ? "#c0c6cc" : "rgba(255,255,255,0.65)",
+        theme.palette.type === "light" ? "#9BA3B9" : "rgba(255,255,255,0.65)",
       fontWeight: "bold",
     },
     "& .MuiDataGrid-row.Mui-odd": {
-      backgroundColor: "#d7ecff",
+      backgroundColor: "#F4F2FF",
     },
   },
 

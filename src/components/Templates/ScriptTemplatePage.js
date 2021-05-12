@@ -58,16 +58,14 @@ const styles = (theme) => ({
         theme.palette.type === 'light' ? '#f0f0f0' : '#303030'
       }`,
     },
-    '& .MuiDataGrid-cell': {
+    "& .MuiDataGrid-cell": {
       color:
-        theme.palette.type === 'light'
-          ? '#c0c6cc'
-          : 'rgba(255,255,255,0.65)',
-          fontWeight: "bold"
+        theme.palette.type === "light" ? "#9BA3B9" : "rgba(255,255,255,0.65)",
+      fontWeight: "bold",
     },
-    '& .MuiDataGrid-row.Mui-odd' : {
-      backgroundColor: "#d7ecff"
-    }
+    "& .MuiDataGrid-row.Mui-odd": {
+      backgroundColor: "#F4F2FF",
+    },
   },
 
   paper: {

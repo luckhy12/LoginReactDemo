@@ -1,5 +1,5 @@
 import axios from "axios";
-const API_URL = "https://localhost:44385";
+const API_URL = "https://staging-api.dialsight.com";
 
 export function serviceCallAuth(requestData) {
   return new Promise((resolve, reject) => {
