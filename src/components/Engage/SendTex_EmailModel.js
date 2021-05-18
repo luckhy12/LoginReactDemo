@@ -32,8 +32,8 @@ class SendTextEmailModel extends React.Component {
     super(props);
     this.state = {
       cust_data: {
-        strFrom: "7976053359",
-        strTo: "9785585649",
+        strFrom: "9878567645",
+        strTo: "5678453456",
         strToName: "",
         strBody: "",
         templateId: 0
