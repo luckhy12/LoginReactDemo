@@ -14,8 +14,8 @@ import AddEditTemplateModal from "./AddEditTemplateModal";
 import ConfirmationDialog from "../utility/ConfirmationDialog";
 import Loader from "../utility/Loader";
 import IconButton from "@material-ui/core/IconButton";
-import DeleteOutlinedIcon from "@material-ui/icons/DeleteOutlined";
-import CreateOutlinedIcon from "@material-ui/icons/CreateOutlined";
+import DeleteIcon from '@material-ui/icons/Delete';
+import CreateIcon from '@material-ui/icons/Create';
 
 const styles = (theme) => ({
 
@@ -194,6 +194,7 @@ class SMSTemplatePage extends React.Component {
         field: "acction",
         headerName: "Actions",
         sortable: false,
+        filterable: false,
         headerAlign: "right",
         align: "right",
         renderCell: (params) => {
@@ -203,13 +204,13 @@ class SMSTemplatePage extends React.Component {
                 aria-label="delete"
                 onClick={(e) => this.onClickEdit(params.row)}
               >
-                <CreateOutlinedIcon color="primary" />
+                <CreateIcon color="primary" />
               </IconButton>
               <IconButton
                 aria-label="delete"
                 onClick={(e) => this.onClickDelete(params.row)}
               >
-                <DeleteOutlinedIcon color="primary" />
+                <DeleteIcon color="primary" />
               </IconButton>
             </div>
           );
@@ -243,11 +244,13 @@ class SMSTemplatePage extends React.Component {
               disableClickEventBubbling: true,
             }))}
             pageSize={10}
-            disableColumnMenu={true}
+            disableColumnMenu={false}
+            disableColumnSelector = {true}
+            disableDensitySelector = {true}
             autoHeight={true}
             autoPageSize={false}
             checkboxSelection={false}
-            rowsPerPageOptions={[10, 25, 50, 100]}
+            rowsPerPageOptions={[10, 25, 50, 100]}        
           />
         </div>
         {this.state.isLoading && <Loader type="full-screen" />}

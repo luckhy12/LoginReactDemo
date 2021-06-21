@@ -13,6 +13,9 @@ import Typography from "@material-ui/core/Typography";
 import AddEditClientsModal from "./AddEditClientsModal";
 import ConfirmationDialog from "../utility/ConfirmationDialog";
 import Loader from "../utility/Loader";
+import IconButton from "@material-ui/core/IconButton";
+import DeleteIcon from '@material-ui/icons/Delete';
+import CreateIcon from '@material-ui/icons/Create';
 
 const styles = (theme) => ({
 
@@ -178,26 +181,27 @@ class ClientsPage extends React.Component {
         field: "acction",
         headerName: 'Actions',
         sortable: false,
+        filterable: false,
         headerAlign: 'right',
         align: "right",
         renderCell: (params) => {
           return (
             <div className={classes.flex}>
-              <Button
+              <IconButton
                 className="mr-2"
                 variant="contained"
                 onClick={(e) => this.onClickEdit(params.row)}
                 color="primary"
               >
-                Edit
-              </Button>
-              <Button
+                <CreateIcon color="primary" />
+              </IconButton>
+              <IconButton
                 onClick={(e) => this.onClickDelete(params.row)}
                 variant="contained"
                 color="primary"
               >
-                Delete
-              </Button>
+                <DeleteIcon color="primary" />
+              </IconButton>
             </div>
           );
         },
@@ -226,11 +230,13 @@ class ClientsPage extends React.Component {
             rows={this.props.allClientsList}
             columns={columns}
             pageSize={10}
-            disableColumnMenu={true}
+            disableColumnMenu={false}
+            disableColumnSelector = {true}
+            disableDensitySelector = {true}
             autoHeight={true}
-            // getRowId={(row)=>{
-            //   return  row.clientID_ids
-            // }}
+            autoPageSize={false}
+            checkboxSelection={false}
+            rowsPerPageOptions={[10, 25, 50, 100]}        
           />
         </div>
         {this.state.isLoading && <Loader type="full-screen" />}

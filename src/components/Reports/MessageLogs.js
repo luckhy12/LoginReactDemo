@@ -292,11 +292,13 @@ class MessageLogsPage extends React.Component {
                 disableClickEventBubbling: true,
               }))}
               pageSize={10}
-              disableColumnMenu={true}
-              autoHeight={true}
-              autoPageSize={false}
-              checkboxSelection={false}
-              rowsPerPageOptions={[10, 25, 50, 100]}
+            disableColumnMenu={false}
+            disableColumnSelector = {true}
+            disableDensitySelector = {true}
+            autoHeight={true}
+            autoPageSize={false}
+            checkboxSelection={false}
+            rowsPerPageOptions={[10, 25, 50, 100]}        
             />
       </div>
     );

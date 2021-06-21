@@ -212,8 +212,9 @@ class CustomerPage extends React.Component {
         field: "acction",
         headerName: "Actions",
         sortable: false,
-        headerAlign: "left",
-        align: "left",
+        filterable: false,
+        headerAlign: "right",
+        align: "right",
         renderCell: (params) => {
           return (
             <div className={classes.flex}>
@@ -262,7 +263,9 @@ class CustomerPage extends React.Component {
               disableClickEventBubbling: true,
             }))}
             pageSize={10}
-            disableColumnMenu={true}
+            disableColumnMenu={false}
+            disableColumnSelector = {true}
+            disableDensitySelector = {true}
             autoHeight={true}
             autoPageSize={false}
             checkboxSelection={false}

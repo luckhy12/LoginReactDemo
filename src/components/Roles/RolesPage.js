@@ -10,6 +10,9 @@ import Typography from "@material-ui/core/Typography";
 import AddEditRolesModal from "./AddEditRolesModal";
 import ConfirmationDialog from "../utility/ConfirmationDialog";
 import Loader from "../utility/Loader";
+import IconButton from "@material-ui/core/IconButton";
+import DeleteIcon from '@material-ui/icons/Delete';
+import CreateIcon from '@material-ui/icons/Create';
 
 const styles = (theme) => ({
 
@@ -174,26 +177,27 @@ class RolesPage extends React.Component {
         field: "acction",
         headerName: "Actions",
         sortable: false,
+        filterable: false,
         align: "right",
         headerAlign: 'right',
         renderCell: (params) => {
           return (
             <div className={classes.flex}>
-              <Button
+              <IconButton
                 className="mr-2"
                 variant="contained"
                 onClick={(e) => this.onClickEdit(params.row)}
                 color="primary"
               >
-                Edit
-              </Button>
-              <Button
+                <CreateIcon color="primary" />
+              </IconButton>
+              <IconButton
                 onClick={(e) => this.onClickDelete(params.row)}
                 variant="contained"
                 color="primary"
               >
-                Delete
-              </Button>
+                 <DeleteIcon color="primary" />
+              </IconButton>
             </div>
           );
         },
@@ -223,8 +227,13 @@ class RolesPage extends React.Component {
             rows={this.props.allRolesList}
             columns={columns}
             pageSize={10}
-            disableColumnMenu={true}
+            disableColumnMenu={false}
+            disableColumnSelector = {true}
+            disableDensitySelector = {true}
             autoHeight={true}
+            autoPageSize={false}
+            checkboxSelection={false}
+            rowsPerPageOptions={[10, 25, 50, 100]}        
           />
         </div>
         {this.state.isLoading && <Loader type="full-screen" />}
